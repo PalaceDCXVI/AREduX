@@ -252,7 +252,7 @@ MonoBehaviour:
   - {fileID: -1221033598134238850}
   - {fileID: -262752914467190332}
   - {fileID: -2167129648898210226}
-  m_renderMode: 1
+  m_renderMode: 0
   m_depthSubmissionMode: 1
 --- !u!114 &-4020505679371957563
 MonoBehaviour:
@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Name: Standalone
   m_EditorClassIdentifier: 
   features:
+  - {fileID: -6059270418407686864}
   - {fileID: -7807343376003450997}
   - {fileID: -906556588638531020}
   - {fileID: -2574518179106770580}
@@ -444,12 +445,11 @@ MonoBehaviour:
   - {fileID: 6374103403789111723}
   - {fileID: -4020505679371957563}
   - {fileID: -6700936524059387910}
+  - {fileID: -2616848298621765914}
   - {fileID: -151618017000479597}
   - {fileID: 8904143290508074163}
-  - {fileID: -2616848298621765914}
-  - {fileID: -6059270418407686864}
-  m_renderMode: 1
-  m_depthSubmissionMode: 2
+  m_renderMode: 0
+  m_depthSubmissionMode: 1
 --- !u!114 &-906556588638531020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cf79659a011bd419c7a2a30eb74e9a, type: 3}
   m_Name: EyeGazeInteraction Standalone
   m_EditorClassIdentifier: 
-  m_enabled: 0
+  m_enabled: 1
   nameUi: Eye Gaze Interaction Profile
   version: 0.0.1
   featureIdInternal: com.unity.openxr.feature.input.eyetracking
