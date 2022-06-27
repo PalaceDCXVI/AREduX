@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Microsoft.MixedReality.Toolkit;
+using UnityEngine;
 using System.Collections;
 
 /*
@@ -35,9 +36,10 @@ namespace VisSim
         private float numLevelsOfBlur;
         private RenderTexture rt; // temporary render texture for generating mipmaps
 
-        protected void Awake() // (NB: not Start, as Grid needs to be set even if not enabled)
+        //protected void Awake() // (NB: not Start, as Grid needs to be set even if not enabled)
+        protected override void Start() // (NB: not Start, as Grid needs to be set even if not enabled)
         {
-            base.Start();
+            //base.Start();
 
             //Create render texture (NB: we will do this rather than using a temporary rendertexture, as in Unity 5+ these don't appear to support mipmaps)
             int width_px = Screen.width;
@@ -103,7 +105,12 @@ namespace VisSim
             }
 
             // Gaze-contingent
-            Vector2 xy_norm = GazeTracker.GetInstance.xy_norm;
+            Vector2 xy_norm = new Vector2(0.5f, 0.5f);
+            if (CoreServices.InputSystem?.EyeGazeProvider?.IsEyeTrackingEnabledAndValid ?? false)
+            {
+                xy_norm = Camera.main.WorldToViewportPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
+                CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized);
+            }
             Material.SetFloat("_MouseX", 1 - xy_norm.x); // Why 1-x???
             Material.SetFloat("_MouseY", xy_norm.y);
             //Debug.Log ("Setting position: " + ((-pos.x+1f)/2f) );

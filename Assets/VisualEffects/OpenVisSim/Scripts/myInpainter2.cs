@@ -1,7 +1,5 @@
 // TODO -- have a transparency option for blending inpainted region with original image?
 using Microsoft.MixedReality.Toolkit;
-using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
 
 namespace VisSim
@@ -234,16 +232,12 @@ namespace VisSim
 
 
             // Gaze-contingent
-            //Vector2 xy_norm = GazeTracker.GetInstance.xy_norm;
             Vector2 xy_norm = new Vector2(0.5f, 0.5f);
             if (CoreServices.InputSystem?.EyeGazeProvider?.IsEyeTrackingEnabledAndValid ?? false)
             {
-                //xy_norm = Camera.main.WorldToViewportPoint(Microsoft.MixedReality.Toolkit.CoreServices.InputSystem.EyeGazeProvider.LatestEyeGaze.origin + Microsoft.MixedReality.Toolkit.CoreServices.InputSystem.EyeGazeProvider.LatestEyeGaze.direction);
                 xy_norm = Camera.main.WorldToViewportPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
                 CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized);
             }
-            //Debug.Log("camera pos: " + Camera.main.transform.position);
-            //Debug.Log("GazeDirection: " + Microsoft.MixedReality.Toolkit.CoreServices.InputSystem.EyeGazeProvider);
 
             if (xy_norm_prev != xy_norm)
             {

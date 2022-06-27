@@ -1,4 +1,5 @@
 using System;
+using Microsoft.MixedReality.Toolkit;
 using UnityEngine;
 
 namespace VisSim
@@ -224,7 +225,12 @@ namespace VisSim
             */
 
             // Gaze-contingent
-            Vector2 xy_norm = GazeTracker.GetInstance.xy_norm;
+            Vector2 xy_norm = new Vector2(0.5f, 0.5f);
+            if (CoreServices.InputSystem?.EyeGazeProvider?.IsEyeTrackingEnabledAndValid ?? false)
+            {
+                xy_norm = Camera.main.WorldToViewportPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
+                CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized);
+            }
             Material.SetFloat("_MouseX", 1 - xy_norm.x); // Why 1-x???
             Material.SetFloat("_MouseY", xy_norm.y);
         }

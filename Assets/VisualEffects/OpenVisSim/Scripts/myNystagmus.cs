@@ -3,6 +3,7 @@
 // TODO - make compatible with Double Vision script (currently not!)
 // TODO - artificial/monocular is untested and likely broken
 
+using Microsoft.MixedReality.Toolkit;
 using UnityEngine;
 
 namespace VisSim
@@ -84,7 +85,12 @@ namespace VisSim
             
             // Gaze-contingent:
             // Get
-            Vector2 xy_norm = GazeTracker.GetInstance.xy_norm;
+            Vector2 xy_norm = new Vector2(0.5f, 0.5f);
+            if (CoreServices.InputSystem?.EyeGazeProvider?.IsEyeTrackingEnabledAndValid ?? false)
+            {
+                xy_norm = Camera.main.WorldToViewportPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
+                CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized);
+            }
             float x = xy_norm.x;
             float y = xy_norm.y;
             // Adjust
