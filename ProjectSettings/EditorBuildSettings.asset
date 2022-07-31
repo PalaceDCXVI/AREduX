@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/EyeTrackingTest.unity
-    guid: 6d976fbc7f7ba394f8ce3d3058a79939
+    path: Assets/Scenes/ScenarioTest.unity
+    guid: 7e0af24b6a9497d4699b0958e638e000
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 56c5bb70cc6687544b90208b384d5b47, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: da54f936afc25f24ea563631edf5c8cb, type: 2}
