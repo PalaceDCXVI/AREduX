@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class ScenarioManager : MonoBehaviour
 {
+    public static ScenarioManager Instance;
+
     public List<ScenarioTask> ScenarioObjectives;
 
     public ScenarioTask currentTask;
@@ -18,6 +20,16 @@ public class ScenarioManager : MonoBehaviour
     // Gather all existing scenario tasks in the scene.
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("ScenarioManager already exists.");
+            return;
+        }
+
         var tasks = FindObjectsOfType<ScenarioTask>();
 
         ScenarioObjectives.Clear();
