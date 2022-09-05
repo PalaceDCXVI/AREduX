@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 3cef435d2eee8c1468e288427debc855
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - StartingClip: {fileID: 8300000, guid: cff0d41ed7648384d89bea7bfbd9f180, type: 3}
+  - UtencilPlacementClip: {fileID: 8300000, guid: b30c1c7d56e2a8d448f0dce617a59528, type: 3}
+  - SandwichmakingPrompt: {fileID: 8300000, guid: 3fd0ca2ddd014fe4c91194b66721e218, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

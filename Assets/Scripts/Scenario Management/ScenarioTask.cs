@@ -13,19 +13,33 @@ public class ScenarioTask : MonoBehaviour
 
     public int orderIndex;
 
-    public void StartTask()
-    {
-        OnTaskBegin.Invoke();
+    public bool hasStarted {get; protected set;}
+    public bool hasEnded {get; protected set;}
 
-        Debug.Log("Task " + TaskName + " Started");
+    // Start is called before the first frame update
+    void Start()
+    {
+        hasStarted = false;
+        hasEnded = false;
     }
 
-    public void CompleteTask()
+    public virtual void StartTask()
     {
-        OnTaskComplete.Invoke();
+        Debug.Log("Task " + TaskName + " Started");
 
+        OnTaskBegin.Invoke();
+
+        hasStarted = true;
+    }
+
+    public virtual void CompleteTask()
+    {
         Debug.Log("Task " + TaskName + " Completed");
 
+        OnTaskComplete.Invoke();
+
         FindObjectOfType<ScenarioManager>().AdvanceCurrentTask();
+
+        hasEnded = true;
     }
 }

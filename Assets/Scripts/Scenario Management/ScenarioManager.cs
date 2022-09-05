@@ -58,7 +58,7 @@ public class ScenarioManager : MonoBehaviour
         if (ScenarioObjectives.Count > 0)
         {
             currentTask = ScenarioObjectives[0];
-            currentTask.StartTask();
+            //currentTask.StartTask();
         }
         else
         {

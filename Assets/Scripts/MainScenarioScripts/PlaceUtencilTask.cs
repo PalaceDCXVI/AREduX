@@ -9,7 +9,7 @@ public class PlaceUtencilTask : ScenarioTask
     // Start is called before the first frame update
     void Start()
     {
-        correctNumberofUtencils = GameObject.FindGameObjectsWithTag("Utencil").Length;
+
     }
 
     // Update is called once per frame
@@ -18,24 +18,38 @@ public class PlaceUtencilTask : ScenarioTask
         
     }
 
+    public override void StartTask()
+    {
+        base.StartTask();
+
+        correctNumberofUtencils = GameObject.FindGameObjectsWithTag("Utencil").Length;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Utencil"))
+        if (hasStarted)
         {
-            collidedObjects.Add(collision.gameObject);
+            if (collision.gameObject.CompareTag("Utencil"))
+            {
+                collidedObjects.Add(collision.gameObject);
+            }
+            if (collidedObjects.Count == correctNumberofUtencils)
+            {
+                CompleteTask();
+            }
         }
-        if (collidedObjects.Count == correctNumberofUtencils)
-        {
-            CompleteTask();
-        }
+
         
     }
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Utencil"))
+        if (hasStarted)
         {
-            collidedObjects.Remove(collision.gameObject);
+            if (collision.gameObject.CompareTag("Utencil"))
+            {
+                collidedObjects.Remove(collision.gameObject);
+            }
         }
     }
 
