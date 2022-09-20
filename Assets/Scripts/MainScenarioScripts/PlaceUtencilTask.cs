@@ -33,7 +33,7 @@ public class PlaceUtencilTask : ScenarioTask
             {
                 collidedObjects.Add(collision.gameObject);
             }
-            if (collidedObjects.Count == correctNumberofUtencils)
+            if (collidedObjects.Count == correctNumberofUtencils && !hasEnded)
             {
                 CompleteTask();
             }
