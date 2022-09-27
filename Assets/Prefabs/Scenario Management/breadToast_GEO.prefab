@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1337230974393383904}
   m_Layer: 0
-  m_Name: TomatoSlot (2)
+  m_Name: TomatoSlot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,68 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8539857162367258446}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2898269336138843146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8972266863488192418}
+  m_Layer: 0
+  m_Name: PickleSlot (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8972266863488192418
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2898269336138843146}
+  m_LocalRotation: {x: 0.7057897, y: 0.24071462, z: -0.14577122, w: 0.6501293}
+  m_LocalPosition: {x: -0.0457, y: -0.0178, z: -0.0064}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8539857162367258446}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 81.073, y: -223.71, z: -255.52899}
+--- !u!1 &2928178087144659123
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6686096614706525769}
+  m_Layer: 0
+  m_Name: PickleSlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6686096614706525769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2928178087144659123}
+  m_LocalRotation: {x: 0.7057897, y: 0.24071462, z: -0.14577122, w: 0.6501293}
+  m_LocalPosition: {x: -0.07842844, y: -0.024481524, z: 0.019183703}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8539857162367258446}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 81.073, y: -223.71, z: -255.52899}
 --- !u!1 &5060698928284748248
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,36 +120,6 @@ Transform:
   m_Father: {fileID: 8539857162367258446}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5352063845465739187
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9070817954881344634}
-  m_Layer: 0
-  m_Name: TomatoSlot (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9070817954881344634
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5352063845465739187}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0398, y: -0.0181, z: 0.0295}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8539857162367258446}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5634123123687634481
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +148,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8539857162367258446}
-  m_RootOrder: 3
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7174754481871176347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7348022823425007647}
+  m_Layer: 0
+  m_Name: TurkeySlot (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7348022823425007647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7174754481871176347}
+  m_LocalRotation: {x: 0.04597666, y: -0.0003266564, z: 0.041643336, w: 0.9980741}
+  m_LocalPosition: {x: -0.0714, y: -0.0187, z: 0.0025}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8539857162367258446}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8473749966901141658
 GameObject:
@@ -154,9 +214,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3918817823905704702}
-  - {fileID: 9070817954881344634}
   - {fileID: 1337230974393383904}
   - {fileID: 6749669460311133574}
+  - {fileID: 5204145007491029670}
+  - {fileID: 7348022823425007647}
+  - {fileID: 6686096614706525769}
+  - {fileID: 8972266863488192418}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 34.177, y: -7.823, z: 79.652}
@@ -294,3 +357,33 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &8572153981634161658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5204145007491029670}
+  m_Layer: 0
+  m_Name: TurkeySlot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5204145007491029670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8572153981634161658}
+  m_LocalRotation: {x: 0.04597666, y: -0.0003266564, z: 0.041643336, w: 0.9980741}
+  m_LocalPosition: {x: -0.0652, y: -0.016, z: 0.0176}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8539857162367258446}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 5.267, y: 0.183, z: 4.787}

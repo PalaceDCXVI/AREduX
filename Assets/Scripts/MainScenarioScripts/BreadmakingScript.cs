@@ -9,6 +9,14 @@ public class BreadmakingScript : MonoBehaviour
     private int filledTomatoSlots = 0;
     private static int totalFilledTomatoSlots = 0;
 
+    public List<GameObject> TurkeySlots;
+    private int filledTurkeySlots = 0;
+    private static int totalFilledTurkeySlots = 0;
+
+    public List<GameObject> PickleSlots;
+    private int filledPickleSlots = 0;
+    private static int totalFilledPickleSlots = 0;
+
     public GameObject Breadslot;
     private bool breadSlotInUse = false;
 
@@ -42,9 +50,41 @@ public class BreadmakingScript : MonoBehaviour
                 filledTomatoSlots++;
                 totalFilledTomatoSlots++;
             }
+
+            if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            {
+                Destroy(collision.rigidbody);
+
+                collision.transform.SetParent(TurkeySlots[filledTurkeySlots].transform, true);
+                collision.transform.localPosition = Vector3.zero;
+                collision.transform.localRotation = Quaternion.identity;
+
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.collider.enabled = false;
+
+                filledTurkeySlots++;
+                totalFilledTurkeySlots++;
+            }
+
+
+            if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            {
+                Destroy(collision.rigidbody);
+
+                collision.transform.SetParent(PickleSlots[filledPickleSlots].transform, true);
+                collision.transform.localPosition = Vector3.zero;
+                collision.transform.localRotation = Quaternion.identity;
+
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.collider.enabled = false;
+
+                filledPickleSlots++;
+                totalFilledPickleSlots++;
+            }
         }
 
-        if (totalFilledTomatoSlots == TomatoSlots.Count && !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+        if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
+            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
         {
             Destroy(collision.rigidbody);
 
