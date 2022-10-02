@@ -36,30 +36,30 @@ public class BreadmakingScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Foodstuffs"))
         {
-            if (collision.gameObject.name.ToLower().Contains("tomato") && filledTomatoSlots < TomatoSlots.Count && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("tomato") && filledTomatoSlots < TomatoSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
             {
                 Destroy(collision.rigidbody);
+
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
                 collision.transform.SetParent(TomatoSlots[filledTomatoSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
                 collision.transform.localRotation = Quaternion.identity;
-
-                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.collider.enabled = false;
 
                 filledTomatoSlots++;
                 totalFilledTomatoSlots++;
             }
 
-            if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
             {
                 Destroy(collision.rigidbody);
+
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
                 collision.transform.SetParent(TurkeySlots[filledTurkeySlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
                 collision.transform.localRotation = Quaternion.identity;
-
-                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.collider.enabled = false;
 
                 filledTurkeySlots++;
@@ -67,15 +67,15 @@ public class BreadmakingScript : MonoBehaviour
             }
 
 
-            if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
             {
                 Destroy(collision.rigidbody);
+
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
                 collision.transform.SetParent(PickleSlots[filledPickleSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
                 collision.transform.localRotation = Quaternion.identity;
-
-                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.collider.enabled = false;
 
                 filledPickleSlots++;
@@ -84,15 +84,15 @@ public class BreadmakingScript : MonoBehaviour
         }
 
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
-            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().IsBeingManipulated())
+            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
         {
             Destroy(collision.rigidbody);
+
+            collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
             collision.transform.SetParent(Breadslot.transform, true);
             collision.transform.localPosition = Vector3.zero;
             collision.transform.localRotation = Quaternion.identity;
-
-            collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
             breadSlotInUse = true;
 

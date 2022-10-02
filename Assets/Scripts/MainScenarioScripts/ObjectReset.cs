@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VoxelEngine;
 
 public class ObjectReset : MonoBehaviour
 {
+    public Transform ResetTransform;
+
     private Vector3 startingPosition = new Vector3();
     private Quaternion startingRotation = new Quaternion();
     // Start is called before the first frame update
@@ -21,13 +24,19 @@ public class ObjectReset : MonoBehaviour
 
     public void ResetObject()
     {
-        this.transform.SetPositionAndRotation(startingPosition, startingRotation);
+        if (ResetTransform == null)
+        {
+            this.transform.SetPositionAndRotation(startingPosition, startingRotation);
+        }
+        else 
+        {
+            this.transform.SetPositionAndRotation(ResetTransform.position, ResetTransform.rotation);
+        }
+        
         if (GetComponent<Rigidbody>())
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
         }
-
-
     }
 }
