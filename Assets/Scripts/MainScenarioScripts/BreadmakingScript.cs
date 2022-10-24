@@ -36,7 +36,7 @@ public class BreadmakingScript : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Foodstuffs"))
         {
-            if (collision.gameObject.name.ToLower().Contains("tomato") && filledTomatoSlots < TomatoSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("tomato") && filledTomatoSlots < TomatoSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
                 Destroy(collision.rigidbody);
 
@@ -49,9 +49,14 @@ public class BreadmakingScript : MonoBehaviour
 
                 filledTomatoSlots++;
                 totalFilledTomatoSlots++;
+
+                if (totalFilledTomatoSlots > TomatoSlots.Count)
+                {
+                    totalFilledTomatoSlots = TomatoSlots.Count;
+                }
             }
 
-            if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
                 Destroy(collision.rigidbody);
 
@@ -64,10 +69,15 @@ public class BreadmakingScript : MonoBehaviour
 
                 filledTurkeySlots++;
                 totalFilledTurkeySlots++;
+
+                if (totalFilledTurkeySlots > TurkeySlots.Count)
+                {
+                    totalFilledTurkeySlots = TurkeySlots.Count;
+                }
             }
 
 
-            if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
+            if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
                 Destroy(collision.rigidbody);
 
@@ -80,11 +90,19 @@ public class BreadmakingScript : MonoBehaviour
 
                 filledPickleSlots++;
                 totalFilledPickleSlots++;
+
+                if (totalFilledPickleSlots > PickleSlots.Count)
+                {
+                    totalFilledPickleSlots = PickleSlots.Count;
+                }
             }
         }
 
+        Debug.Log("Filled Tomato Slots: " + totalFilledTomatoSlots);
+        Debug.Log("Filled Turkey Slots: " + totalFilledTurkeySlots);
+        Debug.Log("Filled Pickle Slots: " + totalFilledPickleSlots);
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
-            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().IsBeingManipulated())
+            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
         {
             Destroy(collision.rigidbody);
 
