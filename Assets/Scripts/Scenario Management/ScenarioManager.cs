@@ -15,6 +15,7 @@ public class ScenarioManager : MonoBehaviour
     public List<ScenarioTask> ScenarioObjectives;
 
     public ScenarioTask currentTask;
+    public bool ScenarioHasStarted { get; private set; }
     public bool finishedTasks = false;
 
     // Gather all existing scenario tasks in the scene.
@@ -29,6 +30,8 @@ public class ScenarioManager : MonoBehaviour
             Debug.LogError("ScenarioManager already exists.");
             return;
         }
+
+        ScenarioHasStarted = false;
 
         var tasks = FindObjectsOfType<ScenarioTask>();
 
@@ -90,5 +93,53 @@ public class ScenarioManager : MonoBehaviour
 
         //if debug text exists, update it.
         FindObjectOfType<ScenarioDebugText>()?.UpdateText();
+    }
+
+    public void ResetScenario()
+    {
+        finishedTasks = false; 
+        var tasks = FindObjectsOfType<ScenarioTask>();
+
+        ScenarioObjectives.Clear();
+        foreach (var task in tasks)
+        {
+            ScenarioObjectives.Add(task.GetComponent<ScenarioTask>());
+        }
+
+        ScenarioObjectives.Sort((ScenarioTask x, ScenarioTask y) =>
+        {
+            if (x.orderIndex > y.orderIndex)
+            {
+                return 1;
+            }
+            else if (x.orderIndex < y.orderIndex)
+            {
+                return -1;
+            }
+            else
+            {
+                Debug.LogError("Scenario Tasks " + x.TaskName + " and " + y.TaskName + " have the same index!");
+                return 0;
+            }
+        });
+
+        if (ScenarioObjectives.Count > 0)
+        {
+            currentTask = ScenarioObjectives[0];
+            //currentTask.StartTask();
+        }
+        else
+        {
+            currentTask = null;
+        }
+    }
+
+    public void StartScenario()
+    {
+        ScenarioHasStarted = true;
+    }
+
+    public void RestartScenario()
+    {
     }
 }

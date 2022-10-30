@@ -25,22 +25,25 @@ public class AudioPromptManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        startingClipDelay -= Time.deltaTime;
-        if (startingClipDelay <= 0.0f && !startingClipHasPlayed)
+        if (ScenarioManager.Instance.ScenarioHasStarted)
         {
-            audioSource.Stop();
+            startingClipDelay -= Time.deltaTime;
+            if (startingClipDelay <= 0.0f && !startingClipHasPlayed)
+            {
+                audioSource.Stop();
 
-            audioSource.clip = StartingClip;
+                audioSource.clip = StartingClip;
 
-            audioSource.Play();
+                audioSource.Play();
 
-            startingClipHasPlayed = true;
-        }
+                startingClipHasPlayed = true;
+            }
 
-        if (startingClipDelay <= -StartingClip.length && !tasksUnderway)
-        {
-            ScenarioManager.Instance.currentTask.StartTask();
-            tasksUnderway = true;
+            if (startingClipDelay <= -StartingClip.length && !tasksUnderway)
+            {
+                ScenarioManager.Instance.currentTask.StartTask();
+                tasksUnderway = true;
+            }
         }
     }
 
@@ -52,4 +55,5 @@ public class AudioPromptManager : MonoBehaviour
 
         audioSource.Play();
     }
+
 }

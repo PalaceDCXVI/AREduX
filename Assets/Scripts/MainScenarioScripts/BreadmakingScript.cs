@@ -29,6 +29,11 @@ public class BreadmakingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GetComponent<Rigidbody>() == null)
+        {
+            transform.localPosition = Vector3.zero;
+            transform.localRotation = Quaternion.identity;
+        }
         
     }
 
@@ -41,6 +46,7 @@ public class BreadmakingScript : MonoBehaviour
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<ObjectReset>().enabled = false;
 
                 collision.transform.SetParent(TomatoSlots[filledTomatoSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -61,6 +67,7 @@ public class BreadmakingScript : MonoBehaviour
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<ObjectReset>().enabled = false;
 
                 collision.transform.SetParent(TurkeySlots[filledTurkeySlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -82,6 +89,7 @@ public class BreadmakingScript : MonoBehaviour
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<ObjectReset>().enabled = false;
 
                 collision.transform.SetParent(PickleSlots[filledPickleSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -107,6 +115,7 @@ public class BreadmakingScript : MonoBehaviour
             Destroy(collision.rigidbody);
 
             collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+            gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
             collision.transform.SetParent(Breadslot.transform, true);
             collision.transform.localPosition = Vector3.zero;
