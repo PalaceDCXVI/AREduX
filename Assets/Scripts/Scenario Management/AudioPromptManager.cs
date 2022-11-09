@@ -39,7 +39,7 @@ public class AudioPromptManager : MonoBehaviour
                 startingClipHasPlayed = true;
             }
 
-            if (startingClipDelay <= -StartingClip.length && !tasksUnderway)
+            if (startingClipDelay <= -StartingClip.length - 1.0f && !tasksUnderway)
             {
                 ScenarioManager.Instance.currentTask.StartTask();
                 tasksUnderway = true;

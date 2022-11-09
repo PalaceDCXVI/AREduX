@@ -22,12 +22,20 @@ public class ToggleVisuals : MonoBehaviour
         
     }
 
+    public void SetVisualEffects(bool active)
+    {
+        VisualsActive = active;
+        Camera.main.GetComponent<myInpainter2>().enabled = VisualsActive;
+        Camera.main.GetComponent<myFloaters>().enabled = VisualsActive;
+        Camera.main.GetComponent<myWiggle>().enabled = VisualsActive;
+    }
+
     public void ToggleVisualEffects()
     {
         VisualsActive = !VisualsActive;
 
         Camera.main.GetComponent<myInpainter2>().enabled = VisualsActive;
-        Camera.main.GetComponent<myFieldLoss>().enabled = VisualsActive;
+        //Camera.main.GetComponent<myFieldLoss>().enabled = VisualsActive;
         //Camera.main.GetComponent<myBrightnessContrastGamma>().enabled = VisualsActive;
         //Camera.main.GetComponent<myDistortionMap>().enabled = VisualsActive;
         //Camera.main.GetComponent<myRecolour>().enabled = VisualsActive;
