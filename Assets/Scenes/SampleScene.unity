@@ -1561,7 +1561,7 @@ GameObject:
   - component: {fileID: 835623028}
   - component: {fileID: 835623032}
   - component: {fileID: 835623031}
-  - component: {fileID: 835623029}
+  - component: {fileID: 835623030}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1583,7 +1583,7 @@ Transform:
   m_Father: {fileID: 1305292121}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &835623029
+--- !u!114 &835623030
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1592,9 +1592,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 835623027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db1d62179705a144bb7a6ad7b163421, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e2b11d1eceaa040896a5e91900b8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingCountdown: 5
+  minAlpha: 0
+  maxAlpha: 0.2
+  timeDistortion: 0.1
+  alphaChangeDirection: 1
 --- !u!23 &835623031
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2225,7 +2230,7 @@ GameObject:
   - component: {fileID: 1037253642}
   - component: {fileID: 1037253646}
   - component: {fileID: 1037253645}
-  - component: {fileID: 1037253643}
+  - component: {fileID: 1037253644}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2247,7 +2252,7 @@ Transform:
   m_Father: {fileID: 1021437348}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1037253643
+--- !u!114 &1037253644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2256,9 +2261,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1037253641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db1d62179705a144bb7a6ad7b163421, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e2b11d1eceaa040896a5e91900b8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingCountdown: 5
+  minAlpha: 0
+  maxAlpha: 0.2
+  timeDistortion: 0.1
+  alphaChangeDirection: 1
 --- !u!23 &1037253645
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2378,7 +2388,7 @@ GameObject:
   - component: {fileID: 1326651159}
   - component: {fileID: 1326651163}
   - component: {fileID: 1326651162}
-  - component: {fileID: 1326651160}
+  - component: {fileID: 1326651161}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -2400,7 +2410,7 @@ Transform:
   m_Father: {fileID: 1607564776}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1326651160
+--- !u!114 &1326651161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2409,9 +2419,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1326651158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db1d62179705a144bb7a6ad7b163421, type: 3}
+  m_Script: {fileID: 11500000, guid: f3e2b11d1eceaa040896a5e91900b8c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartingCountdown: 5
+  minAlpha: 0
+  maxAlpha: 0.2
+  timeDistortion: 0.1
+  alphaChangeDirection: 1
 --- !u!23 &1326651162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3686,6 +3701,7 @@ GameObject:
   - component: {fileID: 2005890413}
   - component: {fileID: 2005890412}
   - component: {fileID: 2005890410}
+  - component: {fileID: 2005890411}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -3714,11 +3730,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2005890408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9db1d62179705a144bb7a6ad7b163421, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2005890411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005890408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e2b11d1eceaa040896a5e91900b8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartingCountdown: 5
+  minAlpha: 0
+  maxAlpha: 0.2
+  timeDistortion: 0.1
+  alphaChangeDirection: 1
 --- !u!23 &2005890412
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3784,7 +3817,7 @@ GameObject:
   - component: {fileID: 2013830983}
   - component: {fileID: 2013830986}
   - component: {fileID: 2013830985}
-  - component: {fileID: 2013830987}
+  - component: {fileID: 2013830984}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -3806,6 +3839,23 @@ Transform:
   m_Father: {fileID: 1024488065}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2013830984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013830982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3e2b11d1eceaa040896a5e91900b8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartingCountdown: 5
+  minAlpha: 0
+  maxAlpha: 0.2
+  timeDistortion: 0.1
+  alphaChangeDirection: 1
 --- !u!23 &2013830985
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3855,18 +3905,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013830982}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2013830987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013830982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9db1d62179705a144bb7a6ad7b163421, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2033114622
 GameObject:
   m_ObjectHideFlags: 0
@@ -4523,10 +4561,10 @@ MonoBehaviour:
   onManipulationStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2005890408}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2005890411}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4538,10 +4576,10 @@ MonoBehaviour:
   onManipulationEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2005890408}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2005890411}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: RestartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4715,15 +4753,15 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 394116730327416313}
+  constraintsManager: {fileID: 844502454573694493}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1037253641}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1037253644}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4735,10 +4773,10 @@ MonoBehaviour:
   onManipulationEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1037253641}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1037253644}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: RestartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5896,10 +5934,10 @@ MonoBehaviour:
   onManipulationStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013830982}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2013830984}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5911,10 +5949,10 @@ MonoBehaviour:
   onManipulationEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2013830982}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2013830984}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: RestartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6151,15 +6189,15 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 394116730327416313}
+  constraintsManager: {fileID: 3461043168190746337}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 835623027}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 835623030}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6171,10 +6209,10 @@ MonoBehaviour:
   onManipulationEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 835623027}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 835623030}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: RestartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7343,15 +7381,15 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 394116730327416313}
+  constraintsManager: {fileID: 8208741343120043138}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1326651158}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1326651161}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: StartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7363,10 +7401,10 @@ MonoBehaviour:
   onManipulationEnded:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1326651158}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1326651161}
+        m_TargetAssemblyTypeName: PlacementCube, Assembly-CSharp
+        m_MethodName: RestartCountdown
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
