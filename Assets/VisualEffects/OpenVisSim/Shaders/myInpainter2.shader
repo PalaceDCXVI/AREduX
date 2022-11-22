@@ -85,7 +85,21 @@ Shader "Hidden/VisSim/myInpainter2"
 					float4 b = tex2D(_MainTex, float2(i.uv[0].x + nearestVals.y, i.uv[0].y));
 					float4 c = tex2D(_MainTex, float2(i.uv[0].x, i.uv[0].y - nearestVals.z));
 					float4 d = tex2D(_MainTex, float2(i.uv[0].x, i.uv[0].y + nearestVals.w));
+					
+					float2 distanceToCenterOfEffect = abs((mouseOffset.xy + 0.5f) - i.uv[0].xy);
+					float2 NearestToCenter = distanceToCenterOfEffect + float2(min(nearestVals.x, nearestVals.y), min(nearestVals.z, nearestVals.w));
+					float distance = length(distanceToCenterOfEffect) / length(NearestToCenter);
+					distance = pow(distance, 8);
+					float4 center = tex2D(_MainTex, float2(i.uv[0].xy));
 
+					a *= 1.0 - distance;
+					a += center * (distance);
+					b *= 1.0 - distance;
+					b += center * (distance); 
+					c *= 1.0 - distance;
+					c += center * (distance);
+					d *= 1.0 - distance;
+					d += center * (distance);
 
 					// could be done 'offline' once, and loaded in
 					float a_d = pow(1.0 / nearestVals.x, 2);

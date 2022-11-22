@@ -6,6 +6,10 @@ using UnityEngine;
 public class ObjectPlacementTagComparison : MonoBehaviour
 {
     public string TagToCompare = "";
+
+    public AudioSource soundFXPlayer;
+    public AudioClip placementSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +29,8 @@ public class ObjectPlacementTagComparison : MonoBehaviour
     {
         if (other.tag.ToLower().Contains(TagToCompare))
         {
+            soundFXPlayer.PlayOneShot(placementSound);
+
             other.transform.SetParent(this.transform);
 
             other.gameObject.GetComponent<ObjectManipulator>().ForceEndManipulation();

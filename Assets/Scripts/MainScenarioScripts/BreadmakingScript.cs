@@ -1,6 +1,7 @@
 using Microsoft.MixedReality.Toolkit.Input;
 using System.Collections;
 using System.Collections.Generic;
+using System.Media;
 using UnityEngine;
 
 public class BreadmakingScript : MonoBehaviour
@@ -19,6 +20,9 @@ public class BreadmakingScript : MonoBehaviour
 
     public GameObject Breadslot;
     private bool breadSlotInUse = false;
+
+    public AudioSource soundFXPlayer;
+    public AudioClip placementSound;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +47,8 @@ public class BreadmakingScript : MonoBehaviour
         {
             if (collision.gameObject.name.ToLower().Contains("tomato") && filledTomatoSlots < TomatoSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
+                soundFXPlayer.PlayOneShot(placementSound);
+
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
@@ -64,6 +70,8 @@ public class BreadmakingScript : MonoBehaviour
 
             if (collision.gameObject.name.ToLower().Contains("turkey") && filledTurkeySlots < TurkeySlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
+                soundFXPlayer.PlayOneShot(placementSound);
+
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
@@ -86,6 +94,8 @@ public class BreadmakingScript : MonoBehaviour
 
             if (collision.gameObject.name.ToLower().Contains("pickle") && filledPickleSlots < PickleSlots.Count && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
             {
+                soundFXPlayer.PlayOneShot(placementSound);
+
                 Destroy(collision.rigidbody);
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
@@ -112,6 +122,8 @@ public class BreadmakingScript : MonoBehaviour
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
             !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
         {
+            soundFXPlayer.PlayOneShot(placementSound);
+
             Destroy(collision.rigidbody);
 
             collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();

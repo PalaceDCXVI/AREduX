@@ -15,6 +15,9 @@ public class PlaceUtencilTask : ScenarioTask
     public GameObject PlateSlot;
     public GameObject GlassSlot;
 
+    public AudioSource soundFXPlayer;
+    public AudioClip incorrectPlacementSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +58,18 @@ public class PlaceUtencilTask : ScenarioTask
         {
             CompleteTask();
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+         if (hasStarted)
+         {
+            if (( collision.gameObject.CompareTag("fork") || collision.gameObject.CompareTag("knife") || collision.gameObject.CompareTag("spoon") || collision.gameObject.CompareTag("plate") || collision.gameObject.CompareTag("glass")
+                && collision.gameObject.GetComponent<ObjectManipulator>().enabled) )
+            {
+                soundFXPlayer.PlayOneShot(incorrectPlacementSound);
+            }
+         }
     }
 
     //void OnCollisionEnter(Collision collision)

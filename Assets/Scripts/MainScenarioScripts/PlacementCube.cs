@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class PlacementCube : MonoBehaviour
 {
-    public float StartingCountdown = 5.0f;
+    public float StartingCountdown = 30.0f;
     private float countdown;
 
     bool CountingDown = false;
 
 
     public float minAlpha = 0.0f;
-    public float maxAlpha = 0.2f;
-    public float timeDistortion = 0.1f;
+    public float maxAlpha = 0.08f;
+    public float timeDistortion = 0.05f;
     public float alphaChangeDirection = 1.0f;
     private float alphaValue = -0.1f;
 
