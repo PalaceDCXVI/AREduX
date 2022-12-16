@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 //To use this class, add the scenario manager prefab to the scene and add the debug canvas as a child of the main camera if you wish to see debug info.
 
@@ -12,11 +14,15 @@ public class ScenarioManager : MonoBehaviour
 {
     public static ScenarioManager Instance;
 
+    public static bool AphasiaAudio = false;
+
     public List<ScenarioTask> ScenarioObjectives;
 
     public ScenarioTask currentTask;
     public bool ScenarioHasStarted { get; private set; }
     public bool finishedTasks = false;
+
+    public UnityEvent OnScenarioEnd;
 
     // Gather all existing scenario tasks in the scene.
     private void Awake()
@@ -33,7 +39,7 @@ public class ScenarioManager : MonoBehaviour
 
         ScenarioHasStarted = false;
 
-        var tasks = FindObjectsOfType<ScenarioTask>();
+        var tasks = FindObjectsOfType<ScenarioTask>(true);
 
         ScenarioObjectives.Clear();
         foreach(var task in tasks)
@@ -87,12 +93,17 @@ public class ScenarioManager : MonoBehaviour
         if (currentTask == null)
         {
             finishedTasks = true;
+            OnScenarioEnd.Invoke();
         }
 
         currentTask?.StartTask();
 
         //if debug text exists, update it.
         FindObjectOfType<ScenarioDebugText>()?.UpdateText();
+    }
+    public void StartScenario()
+    {
+        ScenarioHasStarted = true;
     }
 
     public void ResetScenario()
@@ -134,12 +145,14 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
-    public void StartScenario()
+    public void ToggleAphasiaAudio(TextMesh displayText)
     {
-        ScenarioHasStarted = true;
+        AphasiaAudio = !AphasiaAudio;
+
+        if (displayText)
+        {
+            displayText.text = "Dementia Affected Audio: " + (AphasiaAudio ? "On" : "Off");
+        }
     }
 
-    public void RestartScenario()
-    {
-    }
 }

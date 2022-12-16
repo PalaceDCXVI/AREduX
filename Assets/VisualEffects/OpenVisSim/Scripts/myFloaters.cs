@@ -54,10 +54,16 @@ namespace VisSim
         private static bool golLoopEdges = false; // True if cell rules can loop around edges.
         private static float[,] smoothedBoard; // Holds the current state of the board.
         
-        public new void OnEnable()
+        void Awake()
         {
             // init floater texture
             GenerateOverlayTexture();
+        }
+
+        public new void OnEnable()
+        {
+            // init floater texture
+            //GenerateOverlayTexture();
 
             // call base method to enable effect
             base.OnEnable();

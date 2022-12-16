@@ -28,20 +28,35 @@ namespace VisSim
         //private Texture2D diagonalOffsetsTexture; <-- not currently implemented
         private bool[,] isMask;
 
-        // Use this for initialization
-        public new void OnEnable()
+        private void Awake()
         {
-            base.OnEnable();
-
             // load texture (in future, could be generated at runtime, as per warp, etc.)
             fieldLossHandle = this.gameObject.GetComponent<myFieldLoss>();
             if (useFieldTexture)
             {
                 scotomaTexture = fieldLossHandle.overlayTexture;
-            } else {
+            }
+            else
+            {
                 scotomaTexture = (Texture2D)Resources.Load("OpenVisSim/macular-degeneration", typeof(Texture2D)); // blindpatches circle_512 blob2d_1024  gradiant1d_1024
             }
             this.generateFromTexture(scotomaTexture);
+        }
+
+        // Use this for initialization
+        public new void OnEnable()
+        {
+            base.OnEnable();
+
+            //// load texture (in future, could be generated at runtime, as per warp, etc.)
+            //fieldLossHandle = this.gameObject.GetComponent<myFieldLoss>();
+            //if (useFieldTexture)
+            //{
+            //    scotomaTexture = fieldLossHandle.overlayTexture;
+            //} else {
+            //    scotomaTexture = (Texture2D)Resources.Load("OpenVisSim/macular-degeneration", typeof(Texture2D)); // blindpatches circle_512 blob2d_1024  gradiant1d_1024
+            //}
+            //this.generateFromTexture(scotomaTexture);
         }
         
         public void generateFromTexture(Texture2D scotomaTexture)

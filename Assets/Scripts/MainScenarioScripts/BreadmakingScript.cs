@@ -134,8 +134,8 @@ public class BreadmakingScript : MonoBehaviour
             collision.transform.localRotation = Quaternion.identity;
             collision.collider.enabled = false;
 
-            this.gameObject.GetComponent<MeshCollider>().enabled = false;
-            this.gameObject.GetComponent<BoxCollider>().enabled = true;
+            //this.gameObject.GetComponent<MeshCollider>().enabled = false;
+            //this.gameObject.GetComponent<BoxCollider>().enabled = true;
 
             breadSlotInUse = true;
 

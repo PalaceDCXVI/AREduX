@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AudioPromptManager : MonoBehaviour
 {
+    public static AudioPromptManager Instance;
+
     private AudioSource audioSource;
 
     public AudioClip StartingClip;
@@ -12,9 +14,19 @@ public class AudioPromptManager : MonoBehaviour
     private bool startingClipHasPlayed = false;
     private bool tasksUnderway = false;
 
-    public AudioClip UtencilPlacementClip;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogError("AudioPromptManager already exists.");
+            return;
+        }
 
-    public AudioClip SandwichmakingPrompt;
+    }
 
     // Start is called before the first frame update
     void Start()

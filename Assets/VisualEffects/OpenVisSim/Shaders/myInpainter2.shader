@@ -92,14 +92,17 @@ Shader "Hidden/VisSim/myInpainter2"
 					distance = pow(distance, 8);
 					float4 center = tex2D(_MainTex, float2(i.uv[0].xy));
 
-					a *= 1.0 - distance;
-					a += center * (distance);
-					b *= 1.0 - distance;
-					b += center * (distance); 
-					c *= 1.0 - distance;
-					c += center * (distance);
-					d *= 1.0 - distance;
-					d += center * (distance);
+					a *= min(0.97, 1.0 - (distance));
+					a += center * max(0.03, distance);
+
+					b *= min(0.97, 1.0 - (distance));
+					b += center * max(0.03, distance);
+
+					c *= min(0.97, 1.0 - distance);
+					c += center * max(0.03, distance);
+
+					d *= min(0.97, 1.0 - (distance));
+					d += center * max(0.03, distance);
 
 					// could be done 'offline' once, and loaded in
 					float a_d = pow(1.0 / nearestVals.x, 2);

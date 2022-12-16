@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 5569406686638424937}
   - component: {fileID: 5415199757698210186}
   - component: {fileID: 53804602458924021}
+  - component: {fileID: 5814002420089728356}
   m_Layer: 0
   m_Name: breadToast_GEO
   m_TagString: Breadslice
@@ -357,6 +358,19 @@ MonoBehaviour:
   onHoverExited:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &5814002420089728356
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473749966901141658}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.11203276, y: 0.024321469, z: 0.114538066}
+  m_Center: {x: -0.03926909, y: -0.0115805585, z: 0.027606897}
 --- !u!1 &8572153981634161658
 GameObject:
   m_ObjectHideFlags: 0
