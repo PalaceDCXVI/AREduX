@@ -1,5 +1,6 @@
 // TODO -- have a transparency option for blending inpainted region with original image?
 using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine;
 
 namespace VisSim
@@ -27,6 +28,8 @@ namespace VisSim
         private Texture2D cardinalOffsetsTexture;
         //private Texture2D diagonalOffsetsTexture; <-- not currently implemented
         private bool[,] isMask;
+
+        private int effectStrength = 1;
 
         private void Awake()
         {
@@ -282,5 +285,17 @@ namespace VisSim
 		{
 			return "Hidden/VisSim/myInpainter2";
 		}
+
+        public void UpdateEffectStrength(SliderEventData sliderEventData)
+        {
+            effectStrength = (int)(Mathf.Lerp(1, 20, sliderEventData.NewValue));
+            Debug.Log("Updated Strength: " + effectStrength);
+            Material.SetInt("_EffectStrength", effectStrength);
+        }
+
+        public void UpdateThreshold(SliderEventData sliderEventData)
+        {
+            threshold = sliderEventData.NewValue;
+        }
     }
 }

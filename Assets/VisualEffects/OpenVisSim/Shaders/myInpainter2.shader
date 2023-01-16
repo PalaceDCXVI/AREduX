@@ -8,6 +8,7 @@ Shader "Hidden/VisSim/myInpainter2"
 		_MouseX("Mouse X Position (Normalized 0 to 1)", Float) = 0.5
 		_MouseY("Mouse Y Position (Normalized 0 to 1)", Float) = 0.5
 		_ViewDist_m("Viewing distance in meters", Float) = 2.4815
+		_EffectStrength("Effect Strength", Int) = 10
 	}
 		
 	SubShader
@@ -31,6 +32,7 @@ Shader "Hidden/VisSim/myInpainter2"
 			half4 _Overlay_ST;
 			half _MouseX, _MouseY;
 			float _ViewDist_m;
+			int _EffectStrength;
 
 			struct appdata_t {
 				float4 vertex : POSITION;
@@ -89,7 +91,7 @@ Shader "Hidden/VisSim/myInpainter2"
 					float2 distanceToCenterOfEffect = abs((mouseOffset.xy + 0.5f) - i.uv[0].xy);
 					float2 NearestToCenter = distanceToCenterOfEffect + float2(min(nearestVals.x, nearestVals.y), min(nearestVals.z, nearestVals.w));
 					float distance = length(distanceToCenterOfEffect) / length(NearestToCenter);
-					distance = pow(distance, 8);
+					distance = pow(distance, _EffectStrength);
 					float4 center = tex2D(_MainTex, float2(i.uv[0].xy));
 
 					a *= min(0.97, 1.0 - (distance));
