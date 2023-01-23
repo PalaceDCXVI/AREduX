@@ -51,15 +51,15 @@ namespace VisSim
         {
             base.OnEnable();
 
-            //// load texture (in future, could be generated at runtime, as per warp, etc.)
-            //fieldLossHandle = this.gameObject.GetComponent<myFieldLoss>();
-            //if (useFieldTexture)
-            //{
-            //    scotomaTexture = fieldLossHandle.overlayTexture;
-            //} else {
-            //    scotomaTexture = (Texture2D)Resources.Load("OpenVisSim/macular-degeneration", typeof(Texture2D)); // blindpatches circle_512 blob2d_1024  gradiant1d_1024
-            //}
-            //this.generateFromTexture(scotomaTexture);
+            // load texture (in future, could be generated at runtime, as per warp, etc.)
+            fieldLossHandle = this.gameObject.GetComponent<myFieldLoss>();
+            if (useFieldTexture)
+            {
+                scotomaTexture = fieldLossHandle.overlayTexture;
+            } else {
+                scotomaTexture = (Texture2D)Resources.Load("OpenVisSim/macular-degeneration", typeof(Texture2D)); // blindpatches circle_512 blob2d_1024  gradiant1d_1024
+            }
+            this.generateFromTexture(scotomaTexture);
         }
         
         public void generateFromTexture(Texture2D scotomaTexture)
@@ -288,7 +288,7 @@ namespace VisSim
 
         public void UpdateEffectStrength(SliderEventData sliderEventData)
         {
-            effectStrength = (int)(Mathf.Lerp(1, 20, sliderEventData.NewValue));
+            effectStrength = (int)(Mathf.Lerp(1, 8, sliderEventData.NewValue));
             Debug.Log("Updated Strength: " + effectStrength);
             Material.SetInt("_EffectStrength", effectStrength);
         }

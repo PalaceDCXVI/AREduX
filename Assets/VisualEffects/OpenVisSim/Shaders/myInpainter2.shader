@@ -8,7 +8,7 @@ Shader "Hidden/VisSim/myInpainter2"
 		_MouseX("Mouse X Position (Normalized 0 to 1)", Float) = 0.5
 		_MouseY("Mouse Y Position (Normalized 0 to 1)", Float) = 0.5
 		_ViewDist_m("Viewing distance in meters", Float) = 2.4815
-		_EffectStrength("Effect Strength", Int) = 10
+		_EffectStrength("Effect Strength", Int) = 8
 	}
 		
 	SubShader
