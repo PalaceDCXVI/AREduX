@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class HandMaterialManager : MonoBehaviour
 {
+    public bool PseudoHapticsActive = false;
+
     Color standardColour;
     Color hoverColour;
     Color contactColour;
@@ -23,36 +25,79 @@ public class HandMaterialManager : MonoBehaviour
         
     }
 
+    public void TogglePseudoHaptics(TextMesh displayText)
+    {
+        PseudoHapticsActive = !PseudoHapticsActive;
+
+        if (displayText)
+        {
+            displayText.text = "Pseudo Haptics: " + (PseudoHapticsActive ? "On" : "Off");
+        }
+    }
+
     public void HandIsFloating(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        Debug.Log("Hand has left object " + manipulationEventData.Pointer.PointerName);
-        Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-        MonoBehaviour inputBehaviour;
-        if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+        if (PseudoHapticsActive)
         {
-            inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
+            Debug.Log("Hand has left object " + manipulationEventData.Pointer.PointerName);
+            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
+            }
+        }
+        else
+        {
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
+            }
         }
     }
 
     public void HandIsOverObject(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        Debug.Log("Hand is over object " + manipulationEventData.Pointer.PointerName);
-        Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-        MonoBehaviour inputBehaviour;
-        if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+        if (PseudoHapticsActive)
         {
-            inputBehaviour.GetComponentInChildren<Renderer>().material.color = hoverColour;
+            Debug.Log("Hand is over object " + manipulationEventData.Pointer.PointerName);
+            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = hoverColour;
+            }
+        }
+        else
+        {
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
+            }
         }
     }
 
     public void HandIsTouchingObject(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        Debug.Log("Hand is touching object " + manipulationEventData.Pointer.PointerName);
-        Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-        MonoBehaviour inputBehaviour;
-        if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+        if (PseudoHapticsActive)
         {
-            inputBehaviour.GetComponentInChildren<Renderer>().material.color = contactColour;
+            Debug.Log("Hand is touching object " + manipulationEventData.Pointer.PointerName);
+            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = contactColour;
+            }
+        }
+        else
+        {
+            MonoBehaviour inputBehaviour;
+            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
+            {
+                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
+            }
         }
     }
 }
