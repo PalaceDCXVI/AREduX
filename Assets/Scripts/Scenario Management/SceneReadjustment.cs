@@ -25,6 +25,7 @@ public class SceneReadjustment : MonoBehaviour
     {
         Vector3 repositionVector = Camera.main.transform.position - SceneRoot.transform.position;
         repositionVector.x = 0; repositionVector.z = 0;
+        repositionVector.y = 1;
         SceneRoot.transform.Translate(repositionVector);
         Camera.main.transform.Translate(-repositionVector);
     }

@@ -8,9 +8,14 @@ public class HandMaterialManager : MonoBehaviour
 {
     public bool PseudoHapticsActive = false;
 
+    public Material properMaterial;
+
     Color standardColour;
     Color hoverColour;
     Color contactColour;
+    
+    string colourPropertyName = "_Fill_Color_";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,67 +42,56 @@ public class HandMaterialManager : MonoBehaviour
 
     public void HandIsFloating(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        if (PseudoHapticsActive)
+        SkinnedMeshRenderer handRenderer = manipulationEventData.Pointer.Controller.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandRenderer;
+        
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.PointerName);
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+        Debug.Log("Hand sharedMaterial name: " + handRenderer.sharedMaterial.name);
+        Debug.Log("Shader name: " + handRenderer.sharedMaterial.shader.name);
+        Debug.Log("Property name: " + handRenderer.sharedMaterial.shader.GetPropertyName(1));
+
+        if (handRenderer.sharedMaterial.HasProperty(colourPropertyName))
         {
-            Debug.Log("Hand has left object " + manipulationEventData.Pointer.PointerName);
-            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
-            }
-        }
-        else
-        {
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
-            }
+            
+            handRenderer.sharedMaterial.SetColor(colourPropertyName, standardColour);
+
+            Debug.Log("Colour Value: " + handRenderer.sharedMaterial.GetColor(colourPropertyName));
         }
     }
 
     public void HandIsOverObject(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        if (PseudoHapticsActive)
+        SkinnedMeshRenderer handRenderer = manipulationEventData.Pointer.Controller.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandRenderer;
+
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.PointerName);
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+        Debug.Log("Hand sharedMaterial name: " + handRenderer.sharedMaterial.name);
+        Debug.Log("Shader name: " + handRenderer.sharedMaterial.shader.name);
+        Debug.Log("Property name: " + handRenderer.sharedMaterial.shader.GetPropertyName(1));
+        
+        if (handRenderer.sharedMaterial.HasProperty(colourPropertyName))
         {
-            Debug.Log("Hand is over object " + manipulationEventData.Pointer.PointerName);
-            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = hoverColour;
-            }
-        }
-        else
-        {
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
-            }
+            handRenderer.sharedMaterial.SetColor(colourPropertyName, PseudoHapticsActive ? hoverColour : standardColour);
+
+            Debug.Log("Colour Value: " + handRenderer.sharedMaterial.GetColor(colourPropertyName));
         }
     }
 
     public void HandIsTouchingObject(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        if (PseudoHapticsActive)
+        SkinnedMeshRenderer handRenderer = manipulationEventData.Pointer.Controller.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandRenderer;
+
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.PointerName);
+        Debug.Log("Hand is over object: " + manipulationEventData.Pointer.InputSourceParent.SourceName);
+        Debug.Log("Hand sharedMaterial name: " + handRenderer.sharedMaterial.name);
+        Debug.Log("Shader name: " + handRenderer.sharedMaterial.shader.name);
+        Debug.Log("Property name: " + handRenderer.sharedMaterial.shader.GetPropertyName(1));
+
+        if (handRenderer.sharedMaterial.HasProperty(colourPropertyName))
         {
-            Debug.Log("Hand is touching object " + manipulationEventData.Pointer.PointerName);
-            Debug.Log("Hand is over object " + manipulationEventData.Pointer.InputSourceParent.SourceName);
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = contactColour;
-            }
-        }
-        else
-        {
-            MonoBehaviour inputBehaviour;
-            if (manipulationEventData.Pointer.Controller.Visualizer.TryGetMonoBehaviour(out inputBehaviour))
-            {
-                inputBehaviour.GetComponentInChildren<Renderer>().material.color = standardColour;
-            }
+            handRenderer.sharedMaterial.SetColor(colourPropertyName, PseudoHapticsActive ? contactColour : standardColour);
+
+            Debug.Log("Colour Value: " + handRenderer.sharedMaterial.GetColor(colourPropertyName));
         }
     }
 }
