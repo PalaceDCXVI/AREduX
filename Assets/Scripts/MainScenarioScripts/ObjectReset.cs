@@ -9,11 +9,16 @@ public class ObjectReset : MonoBehaviour
 
     private Vector3 startingPosition = new Vector3();
     private Quaternion startingRotation = new Quaternion();
+
+    public Color OriginalColor;
+
     // Start is called before the first frame update
     void Start()
     {
         startingPosition = this.transform.position;
         startingRotation = this.transform.rotation;
+
+        OriginalColor = GetComponentInChildren<Renderer>().material.color;
     }
 
     // Update is called once per frame
