@@ -19,7 +19,7 @@ public class BreadmakingScript : MonoBehaviour
     private static int totalFilledPickleSlots = 0;
 
     public GameObject Breadslot;
-    private bool breadSlotInUse = false;
+    public bool breadSlotInUse = false;
 
     public AudioSource soundFXPlayer;
     public AudioClip placementSound;
@@ -59,8 +59,15 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
 
+                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                {
+                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                }
+
                 filledTomatoSlots++;
                 totalFilledTomatoSlots++;
+
+                collision.gameObject.GetComponent<ManipulationCheck>().canBeSlotted = false;
 
                 if (totalFilledTomatoSlots > TomatoSlots.Count)
                 {
@@ -81,6 +88,13 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localPosition = Vector3.zero;
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
+
+                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                {
+                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                }
+
+                collision.gameObject.GetComponent<ManipulationCheck>().canBeSlotted = false;
 
                 filledTurkeySlots++;
                 totalFilledTurkeySlots++;
@@ -106,8 +120,15 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
 
+                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                {
+                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                }
+
                 filledPickleSlots++;
                 totalFilledPickleSlots++;
+
+                collision.gameObject.GetComponent<ManipulationCheck>().canBeSlotted = false;
 
                 if (totalFilledPickleSlots > PickleSlots.Count)
                 {
@@ -120,26 +141,40 @@ public class BreadmakingScript : MonoBehaviour
         Debug.Log("Filled Turkey Slots: " + totalFilledTurkeySlots);
         Debug.Log("Filled Pickle Slots: " + totalFilledPickleSlots);
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
-            !breadSlotInUse && collision.gameObject.CompareTag("Breadtop") && collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
+            !breadSlotInUse)
         {
-            soundFXPlayer.PlayOneShot(placementSound);
+            if(collision.gameObject.CompareTag("Breadtop") && gameObject.CompareTag("Breadslice") 
+                && 
+                ( (collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()) || (gameObject.GetComponent<ManipulationCheck>() && gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()) )
+                )
+            {
+                soundFXPlayer.PlayOneShot(placementSound);
 
-            Destroy(collision.rigidbody);
+                Destroy(collision.rigidbody);
 
-            collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
-            gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
-            collision.transform.SetParent(Breadslot.transform, true);
-            collision.transform.localPosition = Vector3.zero;
-            collision.transform.localRotation = Quaternion.identity;
-            collision.collider.enabled = false;
+                collision.transform.SetParent(Breadslot.transform, true);
+                collision.transform.localPosition = Vector3.zero;
+                collision.transform.localRotation = Quaternion.identity;
+                collision.collider.enabled = false;
 
-            //this.gameObject.GetComponent<MeshCollider>().enabled = false;
-            //this.gameObject.GetComponent<BoxCollider>().enabled = true;
+                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                {
+                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                }
 
-            breadSlotInUse = true;
+                breadSlotInUse = true;
+                collision.gameObject.GetComponent<BreadmakingScript>().breadSlotInUse = true;
 
-            GetComponent<ScenarioTask>().CompleteTask();
+                GetComponent<ScenarioTask>()?.CompleteTask();
+                collision.gameObject.GetComponent<ScenarioTask>()?.CompleteTask();
+
+                Debug.Log("Sandwich Made");
+            }
+        
+            
         }
     }
 }

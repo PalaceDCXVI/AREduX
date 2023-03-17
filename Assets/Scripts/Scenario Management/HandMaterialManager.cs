@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class HandMaterialManager : MonoBehaviour
 {
-    public bool PseudoHapticsActive = false;
+    public static bool PseudoHapticsActive = false;
 
     public Material properMaterial;
 
-    Color selectionAlterationColor = new Color(0.0f, 0.3f, 0.2f, 0.0f);
+    Color selectionAlterationColor = new Color(0.3f, 0.3f, 0.0f, 0.0f);
 
     Color standardColour;
     Color hoverColour;
@@ -24,6 +24,12 @@ public class HandMaterialManager : MonoBehaviour
          ColorUtility.TryParseHtmlString("#696F76", out standardColour);
          ColorUtility.TryParseHtmlString("#95963C", out hoverColour);
          ColorUtility.TryParseHtmlString("#A6544C", out contactColour);
+
+
+        if (PlayerPrefs.HasKey(PseudoHapticsSwitch.PseudoHapticsEnabledKey))
+        {
+            PseudoHapticsActive = PlayerPrefs.GetInt(PseudoHapticsSwitch.PseudoHapticsEnabledKey) > 0 ? true : false;
+        }
     }
 
     // Update is called once per frame

@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,9 +23,23 @@ public class ToggleVisuals : MonoBehaviour
         
     }
 
+    private void UpdateInPainterEffectVariables()
+    {
+        if (PlayerPrefs.HasKey(BlurSizeSlider.BlurSizeKey))
+        {
+            Camera.main.GetComponent<myInpainter2>().UpdateThreshold(PlayerPrefs.GetFloat(BlurSizeSlider.BlurSizeKey));
+        }
+
+        if (PlayerPrefs.HasKey(BlurStrengthSlider.BlurStrengthKey))
+        {
+            Camera.main.GetComponent<myInpainter2>().UpdateEffectStrength(PlayerPrefs.GetFloat(BlurStrengthSlider.BlurStrengthKey));
+        }
+    }
+
     public void SetVisualEffects(bool active)
     {
         VisualsActive = active;
+        UpdateInPainterEffectVariables();
         Camera.main.GetComponent<myInpainter2>().enabled = VisualsActive;
         Camera.main.GetComponent<myFloaters>().enabled = VisualsActive;
         Camera.main.GetComponent<myWiggle>().enabled = VisualsActive;
@@ -34,6 +49,7 @@ public class ToggleVisuals : MonoBehaviour
     {
         VisualsActive = !VisualsActive;
 
+        UpdateInPainterEffectVariables();
         Camera.main.GetComponent<myInpainter2>().enabled = VisualsActive;
         //Camera.main.GetComponent<myFieldLoss>().enabled = VisualsActive;
         //Camera.main.GetComponent<myBrightnessContrastGamma>().enabled = VisualsActive;

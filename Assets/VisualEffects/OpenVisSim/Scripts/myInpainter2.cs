@@ -293,9 +293,21 @@ namespace VisSim
             Material.SetInt("_EffectStrength", effectStrength);
         }
 
+        public void UpdateEffectStrength(float newValue)
+        {
+            effectStrength = (int)(Mathf.Lerp(1, 8, newValue));
+            Debug.Log("Updated Strength: " + effectStrength);
+            Material.SetInt("_EffectStrength", effectStrength);
+        }
+
         public void UpdateThreshold(SliderEventData sliderEventData)
         {
             threshold = sliderEventData.NewValue;
+        }
+
+        public void UpdateThreshold(float newValue)
+        {
+            threshold = newValue;
         }
     }
 }

@@ -75,6 +75,15 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        if (PlayerPrefs.HasKey(DementiaAffectAudioSwitch.DementiaAffectedAudioEnabledKey))
+        {
+            AphasiaAudio = PlayerPrefs.GetInt(DementiaAffectAudioSwitch.DementiaAffectedAudioEnabledKey) > 0 ? true : false;
+        }
+    }
+
     public void AdvanceCurrentTask()
     {
         if (finishedTasks)

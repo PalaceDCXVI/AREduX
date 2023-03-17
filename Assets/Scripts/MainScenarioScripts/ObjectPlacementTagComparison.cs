@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.OpenXR;
 using Microsoft.MixedReality.Toolkit.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,11 @@ public class ObjectPlacementTagComparison : MonoBehaviour
             other.gameObject.transform.localRotation = Quaternion.identity;
 
             GetComponentInParent<PlaceUtencilTask>().PlaceObject(other.gameObject);
+
+            if (other.gameObject.GetComponentInChildren<ObjectReset>())
+            {
+                other.gameObject.GetComponentInChildren<Renderer>().material.color = other.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+            }
         }
     }
 }
