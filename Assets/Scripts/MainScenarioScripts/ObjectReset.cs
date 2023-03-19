@@ -26,6 +26,15 @@ public class ObjectReset : MonoBehaviour
     {
         
     }
+    
+    public void ResetMaterialColour()
+    {
+        Renderer renderer = GetComponentInChildren<Renderer>();
+        if (renderer)
+        {
+            renderer.material.color = OriginalColor;
+        }
+    }
 
     public void ResetObject()
     {

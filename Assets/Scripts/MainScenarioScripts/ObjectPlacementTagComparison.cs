@@ -44,9 +44,9 @@ public class ObjectPlacementTagComparison : MonoBehaviour
 
             GetComponentInParent<PlaceUtencilTask>().PlaceObject(other.gameObject);
 
-            if (other.gameObject.GetComponentInChildren<ObjectReset>())
+            foreach (var objectRenderer in other.gameObject.GetComponentsInChildren<Renderer>())
             {
-                other.gameObject.GetComponentInChildren<Renderer>().material.color = other.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
             }
         }
     }

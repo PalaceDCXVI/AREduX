@@ -59,9 +59,9 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
 
-                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                foreach (var objectRenderer in collision.gameObject.GetComponentsInChildren<Renderer>())
                 {
-                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                    objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
                 }
 
                 filledTomatoSlots++;
@@ -89,9 +89,9 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
 
-                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                foreach (var objectRenderer in collision.gameObject.GetComponentsInChildren<Renderer>())
                 {
-                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                    objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
                 }
 
                 collision.gameObject.GetComponent<ManipulationCheck>().canBeSlotted = false;
@@ -120,9 +120,9 @@ public class BreadmakingScript : MonoBehaviour
                 collision.transform.localRotation = Quaternion.identity;
                 collision.collider.enabled = false;
 
-                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                foreach (var objectRenderer in collision.gameObject.GetComponentsInChildren<Renderer>())
                 {
-                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                    objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
                 }
 
                 filledPickleSlots++;
@@ -143,9 +143,9 @@ public class BreadmakingScript : MonoBehaviour
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
             !breadSlotInUse)
         {
-            if(collision.gameObject.CompareTag("Breadtop") && gameObject.CompareTag("Breadslice") 
-                && 
-                ( (collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()) || (gameObject.GetComponent<ManipulationCheck>() && gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()) )
+            if (collision.gameObject.CompareTag("Breadtop") && gameObject.CompareTag("Breadslice")
+                &&
+                ((collision.gameObject.GetComponent<ManipulationCheck>() && collision.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()) || (gameObject.GetComponent<ManipulationCheck>() && gameObject.GetComponent<ManipulationCheck>().CanBeSlotted()))
                 )
             {
                 soundFXPlayer.PlayOneShot(placementSound);
@@ -155,14 +155,24 @@ public class BreadmakingScript : MonoBehaviour
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
+                if (gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
+                {
+                    Transform targetTransform = collision.transform.GetComponent<BreadmakingScript>().Breadslot.transform;
+                    transform.position = targetTransform.position;
+                }
+
                 collision.transform.SetParent(Breadslot.transform, true);
-                collision.transform.localPosition = Vector3.zero;
-                collision.transform.localRotation = Quaternion.identity;
+                if (!gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
+                {
+                    collision.transform.localPosition = Vector3.zero;
+                    collision.transform.localRotation = Quaternion.identity;
+                }
+
                 collision.collider.enabled = false;
 
-                if (collision.gameObject.GetComponentInChildren<ObjectReset>())
+                foreach (var objectRenderer in collision.gameObject.GetComponentsInChildren<Renderer>())
                 {
-                    collision.gameObject.GetComponentInChildren<Renderer>().material.color = collision.gameObject.GetComponentInChildren<ObjectReset>().OriginalColor;
+                    objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
                 }
 
                 breadSlotInUse = true;
