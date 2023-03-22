@@ -168,6 +168,11 @@ public class BreadmakingScript : MonoBehaviour
                     collision.transform.localRotation = Quaternion.identity;
                 }
 
+
+                Vector3 fullCenter = new Vector3(0.00150859414f,-0.00650000013f,0.000175608337f);
+                Vector3 fullSize = new Vector3(0.0910478532f,0.0215000007f,0.0930676311f);
+                this.GetComponent<BoxCollider>().center = fullCenter;
+                this.GetComponent<BoxCollider>().size = fullSize;
                 collision.collider.enabled = false;
 
                 foreach (var objectRenderer in collision.gameObject.GetComponentsInChildren<Renderer>())
