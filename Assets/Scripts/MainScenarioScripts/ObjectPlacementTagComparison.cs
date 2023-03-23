@@ -48,6 +48,14 @@ public class ObjectPlacementTagComparison : MonoBehaviour
             {
                 objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
             }
+
+            if (TagToCompare.Contains("plate"))
+            {
+                Vector3 fullCenter = new Vector3(-1.52736902e-07f, -0.0149999997f, 1.11758709e-07f);
+                Vector3 fullSize = new Vector3(0.169024125f, 0.0599999987f, 0.16902411f);
+                other.gameObject.GetComponent<BoxCollider>().center = fullCenter;
+                other.gameObject.GetComponent<BoxCollider>().size = fullSize;
+            }
         }
     }
 }
