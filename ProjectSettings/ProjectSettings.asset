@@ -259,8 +259,10 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: -4238805695427833692, guid: da54f936afc25f24ea563631edf5c8cb, type: 2}
-  - {fileID: -6278253440391763086, guid: 56c5bb70cc6687544b90208b384d5b47, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -734,11 +736,11 @@ PlayerSettings:
   m_MobileRenderingPath: 1
   metroPackageName: AREduX-Prototype
   metroPackageVersion: 1.0.0.0
-  metroCertificatePath: Assets\WSATestCertificate.pfx
+  metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
   metroCertificateIssuer: DefaultCompany
-  metroCertificateNotAfter: 0050dac51e98d901
+  metroCertificateNotAfter: 003e32ab80b9da01
   metroApplicationDescription: Template_3D
   wsaImages: {}
   metroTileShortName: AREduX
