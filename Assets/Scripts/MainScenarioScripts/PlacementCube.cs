@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlacementCube : MonoBehaviour
 {
     public float StartingCountdown = 30.0f;
+
+    public bool StartImmediately = false;
+
     private float countdown;
 
     bool CountingDown = false;
@@ -25,6 +28,11 @@ public class PlacementCube : MonoBehaviour
         currentColour.a = 0.0f;
 
         GetComponent<MeshRenderer>().material.color = currentColour;
+
+        if (StartImmediately)
+        {
+            StartCountdown();
+        }
     }
 
     // Update is called once per frame

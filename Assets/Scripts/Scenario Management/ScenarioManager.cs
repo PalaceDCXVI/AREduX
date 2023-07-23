@@ -19,6 +19,9 @@ public class ScenarioManager : MonoBehaviour
     public List<ScenarioTask> ScenarioObjectives;
 
     public ScenarioTask currentTask;
+
+    public bool StartSimulationOnStart = false;
+
     public bool ScenarioHasStarted { get; private set; }
     public bool finishedTasks = false;
 
@@ -67,7 +70,12 @@ public class ScenarioManager : MonoBehaviour
         if (ScenarioObjectives.Count > 0)
         {
             currentTask = ScenarioObjectives[0];
-            //currentTask.StartTask();
+
+            if (StartSimulationOnStart)
+            {
+                ScenarioHasStarted = true;
+                currentTask.StartTask();
+            }
         }
         else
         {
@@ -146,7 +154,12 @@ public class ScenarioManager : MonoBehaviour
         if (ScenarioObjectives.Count > 0)
         {
             currentTask = ScenarioObjectives[0];
-            //currentTask.StartTask();
+            
+            if (StartSimulationOnStart)
+            {
+                ScenarioHasStarted = true;
+                currentTask.StartTask();
+            }
         }
         else
         {

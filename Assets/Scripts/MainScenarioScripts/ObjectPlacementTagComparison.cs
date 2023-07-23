@@ -3,6 +3,7 @@ using Microsoft.MixedReality.Toolkit.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ObjectPlacementTagComparison : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class ObjectPlacementTagComparison : MonoBehaviour
 
     public AudioSource soundFXPlayer;
     public AudioClip placementSound;
+
+    public bool PermanentPlacement = true;
+
+    public UnityEvent PlacementEvents;
 
     // Start is called before the first frame update
     void Start()
@@ -32,17 +37,30 @@ public class ObjectPlacementTagComparison : MonoBehaviour
         {
             soundFXPlayer.PlayOneShot(placementSound);
 
-            other.transform.SetParent(this.transform);
 
             other.gameObject.GetComponent<ObjectManipulator>().ForceEndManipulation();
-            other.gameObject.GetComponent<ObjectManipulator>().enabled = false;
+
             other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            Destroy(other.gameObject.GetComponent<Rigidbody>());
-            other.gameObject.transform.localPosition = Vector3.zero;
-            other.gameObject.transform.localRotation = Quaternion.identity;
 
-            GetComponentInParent<PlaceUtencilTask>().PlaceObject(other.gameObject);
+            if (PermanentPlacement)
+            {
+                other.gameObject.GetComponent<ObjectManipulator>().enabled = false;
+                Destroy(other.gameObject.GetComponent<Rigidbody>());
+                other.transform.SetParent(this.transform);
+                other.gameObject.transform.localPosition = Vector3.zero;
+                other.gameObject.transform.localRotation = Quaternion.identity;
+            }
+            else
+            {
+                other.gameObject.transform.position = this.transform.position;
+                other.gameObject.transform.rotation = this.transform.rotation;
+            }
+
+            //Should really seperate this out, such that tasks that fire in response to placement are placed in the events event but uh... We'll see if that ever happens. Gonna bet on no.
+            GetComponentInParent<PlaceUtencilTask>()?.PlaceObject(other.gameObject);
+            
+            PlacementEvents.Invoke();
 
             foreach (var objectRenderer in other.gameObject.GetComponentsInChildren<Renderer>())
             {
