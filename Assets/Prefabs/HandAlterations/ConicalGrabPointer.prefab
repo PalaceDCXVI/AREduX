@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 114997244636705472}
   - component: {fileID: 7376459786343609486}
   - component: {fileID: 7543848034581082309}
-  - component: {fileID: 6050344082857658356}
+  - component: {fileID: 2949777403569545541}
   m_Layer: 0
-  m_Name: GrabPointer
+  m_Name: ConicalGrabPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,14 +77,14 @@ MonoBehaviour:
   pointerExtent: 10
   defaultPointerExtent: 10
   sphereCastRadius: 0.05
-  pullbackDistance: 0
-  nearObjectSectorAngle: 360
+  pullbackDistance: 0.08
+  nearObjectSectorAngle: 66
   nearObjectMargin: 0.2
   nearObjectAxisLerp: 0.9
   nearObjectSmoothingFactor: 0.4
   grabLayerMasks:
   - serializedVersion: 2
-    m_Bits: 115
+    m_Bits: 51
   triggerInteraction: 0
   sceneQueryBufferSize: 64
   ignoreCollidersNotInFOV: 1
@@ -122,7 +122,7 @@ MonoBehaviour:
   grabPointMesh: {fileID: 4300012, guid: fd9ad33176d03dd42885a4dce3cb38fb, type: 3}
   grabPointMaterial: {fileID: 2100000, guid: fc1d56dcfc4950949a5b56a1399a1822, type: 2}
   scale: 1.2
---- !u!114 &6050344082857658356
+--- !u!114 &2949777403569545541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

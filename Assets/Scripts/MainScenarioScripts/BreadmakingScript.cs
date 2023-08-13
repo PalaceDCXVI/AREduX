@@ -41,7 +41,7 @@ public class BreadmakingScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void HandleFoodStuffsPlacement(Collision collision)
     {
         if (collision.gameObject.CompareTag("Foodstuffs"))
         {
@@ -188,8 +188,16 @@ public class BreadmakingScript : MonoBehaviour
 
                 Debug.Log("Sandwich Made");
             }
-        
-            
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        HandleFoodStuffsPlacement(collision);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        HandleFoodStuffsPlacement(collision);
     }
 }

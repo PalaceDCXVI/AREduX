@@ -9,6 +9,10 @@ public class ScenarioTask : MonoBehaviour
 
     public AudioClip startingAudioClip;
     public AudioClip startingAudioClipWithAphasia;
+    
+    public bool WaitForAudioClipCompletion = true;
+    public float audioClipTime = 0.05f;
+    public bool audioHasCompleted = false;
 
     public UnityEvent OnTaskBegin;
 
@@ -16,14 +20,21 @@ public class ScenarioTask : MonoBehaviour
 
     public int orderIndex;
 
-    public bool hasStarted {get; protected set;}
-    public bool hasEnded {get; protected set;}
+    public bool hasStarted {get; protected set;} = false;
+    public bool hasEnded {get; protected set;} = false;
+
 
     // Start is called before the first frame update
-    void Start()
+    virtual protected void Start()
     {
-        hasStarted = false;
-        hasEnded = false;
+        if (!ScenarioManager.AphasiaAudio && startingAudioClip)
+        {
+            audioClipTime += startingAudioClip.length;
+        }
+        else if (ScenarioManager.AphasiaAudio && startingAudioClipWithAphasia)
+        {
+            audioClipTime += startingAudioClipWithAphasia.length;
+        }
     }
 
     public virtual void StartTask()
@@ -50,14 +61,41 @@ public class ScenarioTask : MonoBehaviour
         hasStarted = true;
     }
 
-    public virtual void CompleteTask()
+    private void Internal_CompleteTask()
     {
-        Debug.Log("Task " + TaskName + " Completed");
-
         OnTaskComplete.Invoke();
 
         FindObjectOfType<ScenarioManager>().AdvanceCurrentTask();
-
+    
         hasEnded = true;
+    }
+
+    // Update is called once per frame
+    virtual protected void Update()
+    {
+        if (hasStarted)
+        {
+            audioClipTime -= Time.deltaTime;
+        }
+        if (hasEnded && WaitForAudioClipCompletion && audioClipTime < 0.0f && !audioHasCompleted)
+        {
+            audioHasCompleted = true;
+            Internal_CompleteTask();
+        }
+    }
+
+    public virtual void CompleteTask()
+    {
+        if (!hasEnded)
+        {
+            if (WaitForAudioClipCompletion)
+            {
+                hasEnded = true;
+            }
+            else
+            {
+                Internal_CompleteTask();
+            }
+        }
     }
 }

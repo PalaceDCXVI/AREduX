@@ -8,11 +8,13 @@ public class ManipulationCheck : MonoBehaviour
 {
     private ObjectManipulator manipulator;
 
-    public bool isBeingManipulated = false;
-    public bool canBeSlotted = false;
+    public bool CanBePlacedWhileBeingManipulated = true;
 
     public float TimeDelayForSlotting = 1.0f;
     private float currentDelay = 0.0f;
+
+    public bool isBeingManipulated = false;
+    public bool canBeSlotted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +47,10 @@ public class ManipulationCheck : MonoBehaviour
     private void OnManipulationStart(ManipulationEventData arg0)
     {
         isBeingManipulated = true;
-        canBeSlotted = true;
+        if (CanBePlacedWhileBeingManipulated)
+        {
+            canBeSlotted = true;
+        }
 
         currentDelay = TimeDelayForSlotting;
     }
