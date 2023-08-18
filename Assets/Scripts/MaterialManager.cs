@@ -1,4 +1,5 @@
 using Microsoft.MixedReality.Toolkit;
+using Microsoft.MixedReality.Toolkit.Audio;
 using Microsoft.MixedReality.Toolkit.Input;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ public class MaterialManager : MonoBehaviour
         None
     } 
 
-    public HighlightType highlightType = HighlightType.ObjectHighlight;
+    public static HighlightType highlightType = HighlightType.ObjectHighlight;
 
     //Color selectionAlterationColor = new Color(0.3f, 0.3f, 0.0f, 0.0f);
     Color selectionAlterationColor = new Color(1.0f, 1.0f, 0.0f, 0.0f);
@@ -70,7 +71,31 @@ public class MaterialManager : MonoBehaviour
         }
     }
 
-    
+    public void SetHighlightTypeToObject()
+    {
+        highlightType = HighlightType.ObjectHighlight;
+    }
+
+    public void SetHighlightTypeToHand()
+    {
+        highlightType = HighlightType.HandHighlight;
+    }
+
+    public void SetHighlightTypeToDot()
+    {
+        highlightType = HighlightType.DotCursor;
+    }
+
+    public void SetHighlightTypeToSpherical()
+    {
+        highlightType = HighlightType.SphericalCursor;
+    }
+
+    public void SetHighlightTypeToNone()
+    {
+        highlightType = HighlightType.None;
+    }
+
     public void HandIsFloating(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
         switch (highlightType)

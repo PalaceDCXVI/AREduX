@@ -31,7 +31,7 @@ public class SphereCursor : MonoBehaviour
         Vector3 position;
         float scale = spherePointer.SphereCastRadius;
 
-        switch (MaterialManager.Instance.highlightType)
+        switch (MaterialManager.highlightType)
         {
             case MaterialManager.HighlightType.SphericalCursor:
             sphere.SetActive(true);
@@ -59,6 +59,7 @@ public class SphereCursor : MonoBehaviour
             break;
         } 
     }
+
 
     public bool TryGetNearGraspPoint(out Vector3 result)
     {      
