@@ -15,10 +15,11 @@ public class MaterialManager : MonoBehaviour
         HandHighlight,
         SphericalCursor,
         DotCursor,
+        Seethrough,
         None
     } 
 
-    public static HighlightType highlightType = HighlightType.ObjectHighlight;
+    public HighlightType highlightType = HighlightType.Seethrough;
 
     //Color selectionAlterationColor = new Color(0.3f, 0.3f, 0.0f, 0.0f);
     Color selectionAlterationColor = new Color(1.0f, 1.0f, 0.0f, 0.0f);
@@ -27,6 +28,7 @@ public class MaterialManager : MonoBehaviour
     Color standardColour;
     Color hoverColour;
     Color contactColour;
+    public float SeethroughAlpha = 0.7f;
     
     string colourPropertyName = "_Color";
     string GrabbableObjectPosPropertyName = "_GrabbableObjectPos";
@@ -96,6 +98,42 @@ public class MaterialManager : MonoBehaviour
         highlightType = HighlightType.None;
     }
 
+    public static void ToOpaqueMode(Material material)
+    {
+        material.SetOverrideTag("RenderType", "");
+        material.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.One);
+        material.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.Zero);
+        material.SetInt("_ZWrite", 1);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = -1;
+    }
+ 
+    public static void ToFadeMode(Material material)
+    {
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.EnableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent;
+    }
+
+    public static void ToTransparentMode(Material material)
+    {
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One);
+        material.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetFloat("_ZWrite", 0.0f);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.DisableKeyword("_ALPHABLEND_ON");
+        material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent;
+    }
+
     public void HandIsFloating(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
         switch (highlightType)
@@ -103,6 +141,21 @@ public class MaterialManager : MonoBehaviour
         case HighlightType.ObjectHighlight:
             foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
             {
+                objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
+            }
+        break;
+
+        case HighlightType.Seethrough:
+            foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
+            {
+                foreach (var mat in objectRenderer.materials)
+                {
+                    //if material rendering mode is not set to transparent already
+                    if (!(mat.GetInt("_SrcBlend") == (int) UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
+                    {
+                        ToOpaqueMode(mat);
+                    }
+                }
                 objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
             }
         break;
@@ -132,7 +185,7 @@ public class MaterialManager : MonoBehaviour
                 }
             }
         break;
-            
+
         default:
         break;
         }
@@ -146,6 +199,21 @@ public class MaterialManager : MonoBehaviour
             foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
             {
                 objectRenderer.material.color = objectRenderer.GetComponent<ObjectReset>().OriginalColor + selectionAlterationColor;
+            }
+        break;
+
+        case HighlightType.Seethrough:
+            foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
+            {
+                foreach (var mat in objectRenderer.materials)
+                {
+                    //if material rendering mode is not set to transparent already
+                    if (!(mat.GetInt("_SrcBlend") == (int) UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
+                    {
+                        ToFadeMode(mat);
+                        mat.color = new Color(objectRenderer.GetComponent<ObjectReset>().OriginalColor.r, objectRenderer.GetComponent<ObjectReset>().OriginalColor.g, objectRenderer.GetComponent<ObjectReset>().OriginalColor.b, SeethroughAlpha);
+                    }
+                }
             }
         break;
 
@@ -188,6 +256,22 @@ public class MaterialManager : MonoBehaviour
             foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
             {
                 objectRenderer.material.color = objectRenderer.GetComponent<ObjectReset>().OriginalColor + contactColour;
+            }
+        break;
+        
+        case HighlightType.Seethrough:
+            foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
+            {
+                foreach (var mat in objectRenderer.materials)
+                {
+                    //if material rendering mode is not set to transparent already
+                    if (!(mat.GetInt("_SrcBlend") == (int) UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
+                    {
+                        ToFadeMode(mat);
+                        mat.color = new Color(objectRenderer.GetComponent<ObjectReset>().OriginalColor.r, objectRenderer.GetComponent<ObjectReset>().OriginalColor.g, objectRenderer.GetComponent<ObjectReset>().OriginalColor.b, SeethroughAlpha);
+
+                    }
+                }
             }
         break;
 

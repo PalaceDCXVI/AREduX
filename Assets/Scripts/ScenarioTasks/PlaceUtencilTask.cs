@@ -42,10 +42,19 @@ public class PlaceUtencilTask : ScenarioTask
             gameObject.transform.localRotation = Quaternion.identity;
         }
 
+        Debug.Log("collidedObjects: " + collidedObjects.Count);
+        Debug.Log("Place Utencils Has Ended: " + hasEnded);
+
         if (collidedObjects.Count == correctNumberofUtencils && !hasEnded)
         {
             CompleteTask();
         }
+    }
+
+    public override void ResetScenario()
+    {
+        base.ResetScenario();
+        collidedObjects.Clear();
     }
 
     void OnTriggerEnter(Collider other)

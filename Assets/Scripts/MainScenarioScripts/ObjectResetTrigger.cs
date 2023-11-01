@@ -20,6 +20,6 @@ public class ObjectResetTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<ObjectReset>()?.ResetObject();
+        other.GetComponent<ObjectReset>()?.ResetObject(true);
     }
 }

@@ -7,6 +7,7 @@ public class ObjectMovementTutorialTask : ScenarioTask
     void Start()
     {
         base.Start();
+        IsTutorialTask = true;
     }
 
     void Update()

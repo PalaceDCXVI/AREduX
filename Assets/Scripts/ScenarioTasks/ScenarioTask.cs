@@ -11,29 +11,35 @@ public class ScenarioTask : MonoBehaviour
     public AudioClip startingAudioClipWithAphasia;
     
     public bool WaitForAudioClipCompletion = true;
-    public float audioClipTime = 0.05f;
+    public float audioClipTime = 0.00f;
+    private float internalAudioClipTime = 0.00f;
     public bool audioHasCompleted = false;
 
     public UnityEvent OnTaskBegin;
 
     public UnityEvent OnTaskComplete;
 
+    public UnityEvent OnTaskReset;
+
     public int orderIndex;
 
     public bool hasStarted {get; protected set;} = false;
     public bool hasEnded {get; protected set;} = false;
+    public bool IsTutorialTask = false;
 
 
     // Start is called before the first frame update
     virtual protected void Start()
     {
+        internalAudioClipTime = audioClipTime;
+
         if (!ScenarioManager.AphasiaAudio && startingAudioClip)
         {
-            audioClipTime += startingAudioClip.length;
+            internalAudioClipTime += startingAudioClip.length;
         }
         else if (ScenarioManager.AphasiaAudio && startingAudioClipWithAphasia)
         {
-            audioClipTime += startingAudioClipWithAphasia.length;
+            internalAudioClipTime += startingAudioClipWithAphasia.length;
         }
     }
 
@@ -63,11 +69,22 @@ public class ScenarioTask : MonoBehaviour
 
     private void Internal_CompleteTask()
     {
+        hasEnded = true;
+        Debug.Log("Task: " + TaskName + " has completed");
         OnTaskComplete.Invoke();
 
         FindObjectOfType<ScenarioManager>().AdvanceCurrentTask();
     
-        hasEnded = true;
+    }
+
+    public virtual void ResetScenario()
+    {  
+        hasStarted = false;
+        hasEnded = false;
+        internalAudioClipTime = audioClipTime;
+        audioHasCompleted = false;
+
+        OnTaskReset.Invoke();
     }
 
     // Update is called once per frame
@@ -75,9 +92,9 @@ public class ScenarioTask : MonoBehaviour
     {
         if (hasStarted)
         {
-            audioClipTime -= Time.deltaTime;
+            internalAudioClipTime -= Time.deltaTime;
         }
-        if (hasEnded && WaitForAudioClipCompletion && audioClipTime < 0.0f && !audioHasCompleted)
+        if (hasEnded && WaitForAudioClipCompletion && internalAudioClipTime <= 0.0f && !audioHasCompleted)
         {
             audioHasCompleted = true;
             Internal_CompleteTask();

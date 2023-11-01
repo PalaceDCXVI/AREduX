@@ -38,7 +38,20 @@ public class BreadmakingScript : MonoBehaviour
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
         }
-        
+    }
+
+    public void ResetScript()
+    {
+        filledTomatoSlots = 0;
+        totalFilledTomatoSlots = 0;
+
+        filledTurkeySlots = 0;
+        totalFilledTurkeySlots = 0;
+
+        filledPickleSlots = 0;
+        totalFilledPickleSlots = 0;
+
+        breadSlotInUse = false;
     }
 
     private void HandleFoodStuffsPlacement(Collision collision)
@@ -49,7 +62,9 @@ public class BreadmakingScript : MonoBehaviour
             {
                 soundFXPlayer.PlayOneShot(placementSound);
 
-                Destroy(collision.rigidbody);
+                //Disable rigidbody physics.
+                //Destroy(collision.rigidbody);
+                collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
@@ -79,7 +94,9 @@ public class BreadmakingScript : MonoBehaviour
             {
                 soundFXPlayer.PlayOneShot(placementSound);
 
-                Destroy(collision.rigidbody);
+                //Disable rigidbody physics.
+                //Destroy(collision.rigidbody);
+                collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
@@ -110,7 +127,9 @@ public class BreadmakingScript : MonoBehaviour
             {
                 soundFXPlayer.PlayOneShot(placementSound);
 
-                Destroy(collision.rigidbody);
+                //Disable rigidbody physics.
+                //Destroy(collision.rigidbody);
+                collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
@@ -150,7 +169,9 @@ public class BreadmakingScript : MonoBehaviour
             {
                 soundFXPlayer.PlayOneShot(placementSound);
 
-                Destroy(collision.rigidbody);
+                //Disable rigidbody physics.
+                //Destroy(collision.rigidbody);
+                collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
@@ -159,6 +180,7 @@ public class BreadmakingScript : MonoBehaviour
                 {
                     Transform targetTransform = collision.transform.GetComponent<BreadmakingScript>().Breadslot.transform;
                     transform.position = targetTransform.position;
+                    transform.rotation = targetTransform.rotation;
                 }
 
                 collision.transform.SetParent(Breadslot.transform, true);
@@ -167,7 +189,6 @@ public class BreadmakingScript : MonoBehaviour
                     collision.transform.localPosition = Vector3.zero;
                     collision.transform.localRotation = Quaternion.identity;
                 }
-
 
                 Vector3 fullCenter = new Vector3(0.00150859414f,-0.00650000013f,0.000175608337f);
                 Vector3 fullSize = new Vector3(0.0910478532f,0.0215000007f,0.0930676311f);

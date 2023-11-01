@@ -27,6 +27,8 @@ public class ScenarioManager : MonoBehaviour
 
     public UnityEvent OnScenarioEnd;
 
+    public bool ResetScenarioOnEnd = false;
+
     // Gather all existing scenario tasks in the scene.
     private void Awake()
     {
@@ -107,17 +109,23 @@ public class ScenarioManager : MonoBehaviour
         int newIndex = ScenarioObjectives.IndexOf(currentTask) + 1;
         currentTask = (newIndex) < ScenarioObjectives.Count ? ScenarioObjectives[newIndex] : null;
 
-        if (currentTask == null)
-        {
-            finishedTasks = true;
-            OnScenarioEnd.Invoke();
-        }
-
         currentTask?.StartTask();
 
         //if debug text exists, update it.
         FindObjectOfType<ScenarioDebugText>()?.UpdateText();
+        
+        if (currentTask == null)
+        {
+            finishedTasks = true;
+            OnScenarioEnd.Invoke();
+
+            if (ResetScenarioOnEnd)
+            {
+                ResetScenario();
+            }
+        }
     }
+
     public void StartScenario()
     {
         ScenarioHasStarted = true;
@@ -126,12 +134,27 @@ public class ScenarioManager : MonoBehaviour
     public void ResetScenario()
     {
         finishedTasks = false; 
-        var tasks = FindObjectsOfType<ScenarioTask>();
 
-        ScenarioObjectives.Clear();
-        foreach (var task in tasks)
+        //ScenarioObjectives.Clear();
+        List<ScenarioTask> tasksToRemove = new List<ScenarioTask>(); 
+        foreach (var task in ScenarioObjectives)
         {
-            ScenarioObjectives.Add(task.GetComponent<ScenarioTask>());
+            if (task.IsTutorialTask)
+            {
+                tasksToRemove.Add(task);
+            }
+            task.ResetScenario();
+            //ScenarioObjectives.Add(task.GetComponent<ScenarioTask>());
+        }
+
+        foreach (var task in tasksToRemove)
+        {
+            ScenarioObjectives.Remove(task);
+        }
+
+        foreach (var obj in GameObject.FindObjectsOfType<ObjectReset>(true))
+        {
+            obj.ResetObject();
         }
 
         ScenarioObjectives.Sort((ScenarioTask x, ScenarioTask y) =>

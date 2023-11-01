@@ -43,7 +43,9 @@ public class ObjectPlacementTagComparison : MonoBehaviour
         if (PermanentPlacement)
         {
             other.gameObject.GetComponent<ObjectManipulator>().enabled = false;
-            Destroy(other.gameObject.GetComponent<Rigidbody>());
+            //Disable rigidbody physics.
+            //Destroy(other.gameObject.GetComponent<Rigidbody>());
+            other.gameObject.GetComponent<Rigidbody>().isKinematic = true;
             other.transform.SetParent(this.transform);
             other.gameObject.transform.localPosition = Vector3.zero;
             other.gameObject.transform.localRotation = Quaternion.identity;

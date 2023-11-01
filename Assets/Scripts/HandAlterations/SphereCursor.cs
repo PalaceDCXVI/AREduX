@@ -31,7 +31,7 @@ public class SphereCursor : MonoBehaviour
         Vector3 position;
         float scale = spherePointer.SphereCastRadius;
 
-        switch (MaterialManager.highlightType)
+        switch (MaterialManager.Instance.highlightType)
         {
             case MaterialManager.HighlightType.SphericalCursor:
             sphere.SetActive(true);
