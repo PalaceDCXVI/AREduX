@@ -15,11 +15,15 @@ TagManager:
   - spoon
   - plate
   - glass
+  - HandRendererDeathPanel
+  - KnifeHead
+  - ForkHead
+  - Familiar
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Foodstuffs
   - Water
   - UI
   - Grabbable

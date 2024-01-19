@@ -6,11 +6,13 @@ using VisSim;
 
 public class ToggleVisuals : MonoBehaviour
 {
-    public bool VisualsActive = false;
+    public static bool VisualsShouldActivate = false;
+    public static bool VisualsActive = false;
 
     // Start is called before the first frame update
     void Start()
     {
+
         //We reverse this here and again at the start of the function to preserve the boolean's readability in editor.
         VisualsActive = !VisualsActive;
 
@@ -43,6 +45,16 @@ public class ToggleVisuals : MonoBehaviour
         Camera.main.GetComponent<myInpainter2>().enabled = VisualsActive;
         Camera.main.GetComponent<myFloaters>().enabled = VisualsActive;
         Camera.main.GetComponent<myWiggle>().enabled = VisualsActive;
+    }
+
+    public void SetVisualEffectsShould(bool active)
+    {
+        VisualsShouldActivate = active;
+    }
+
+    public void TriggerVisualEffectShould()
+    {
+        SetVisualEffects(VisualsShouldActivate);
     }
 
     public void ToggleVisualEffects()

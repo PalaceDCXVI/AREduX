@@ -75,11 +75,12 @@ public class ObjectPlacementTagComparison : MonoBehaviour
         }
         
         other.gameObject.GetComponent<ManipulationCheck>().canBeSlotted = false;
+        other.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.ToLower().Contains(TagToCompare) && other.gameObject.GetComponent<ManipulationCheck>() && other.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
+        if (other.tag.ToLower().Contains(TagToCompare.ToLower()) && other.gameObject.GetComponent<ManipulationCheck>() && other.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
         {
             PlaceObject(other);
         }
@@ -87,7 +88,7 @@ public class ObjectPlacementTagComparison : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag.ToLower().Contains(TagToCompare) && other.gameObject.GetComponent<ManipulationCheck>() && other.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
+        if (other.tag.ToLower().Contains(TagToCompare.ToLower()) && other.gameObject.GetComponent<ManipulationCheck>() && other.gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
         {
             PlaceObject(other);
         }

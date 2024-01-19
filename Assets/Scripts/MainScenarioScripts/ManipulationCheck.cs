@@ -16,6 +16,8 @@ public class ManipulationCheck : MonoBehaviour
     public bool isBeingManipulated = false;
     public bool canBeSlotted = false;
 
+    public bool wasSlotted = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,12 @@ public class ManipulationCheck : MonoBehaviour
         else if (currentDelay < 0.0f && !isBeingManipulated)
         {
             canBeSlotted = false;
+
+            if (!wasSlotted)
+            {
+                SimulationDataManager.Instance.AddIncorrectPlacement();
+            }
+            wasSlotted = false;
         }
     }
 

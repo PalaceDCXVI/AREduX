@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //To use this class, add the scenario manager prefab to the scene and add the debug canvas as a child of the main camera if you wish to see debug info.
@@ -26,8 +28,13 @@ public class ScenarioManager : MonoBehaviour
     public bool finishedTasks = false;
 
     public UnityEvent OnScenarioEnd;
+    public UnityEvent OnScenarioRestart;
 
     public bool ResetScenarioOnEnd = false;
+    public bool ExternalScenarioCompletionCheck = false;
+    public UnityEvent ExternalScenarioCompletionChecks;
+
+    public bool InTutorial = false;
 
     // Gather all existing scenario tasks in the scene.
     private void Awake()
@@ -94,6 +101,11 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+
+    }
+
     public void AdvanceCurrentTask()
     {
         if (finishedTasks)
@@ -116,12 +128,16 @@ public class ScenarioManager : MonoBehaviour
         
         if (currentTask == null)
         {
-            finishedTasks = true;
-            OnScenarioEnd.Invoke();
-
-            if (ResetScenarioOnEnd)
+            ExternalScenarioCompletionChecks.Invoke();
+            if (ResetScenarioOnEnd && !ExternalScenarioCompletionCheck)
             {
                 ResetScenario();
+            }
+            else
+            {
+                finishedTasks = true;
+                SimulationDataManager.Instance.SaveData();
+                OnScenarioEnd.Invoke();
             }
         }
     }
@@ -133,6 +149,8 @@ public class ScenarioManager : MonoBehaviour
 
     public void ResetScenario()
     {
+        OnScenarioRestart.Invoke();
+
         finishedTasks = false; 
 
         //ScenarioObjectives.Clear();
@@ -178,7 +196,7 @@ public class ScenarioManager : MonoBehaviour
         {
             currentTask = ScenarioObjectives[0];
             
-            if (StartSimulationOnStart)
+            //if (StartSimulationOnStart)
             {
                 ScenarioHasStarted = true;
                 currentTask.StartTask();
@@ -198,6 +216,20 @@ public class ScenarioManager : MonoBehaviour
         {
             displayText.text = "Dementia Affected Audio: " + (AphasiaAudio ? "On" : "Off");
         }
+    }
+
+    public void QuitApplication()
+    {
+#if !UNITY_EDITOR
+        Application.Quit();
+#else
+        EditorApplication.isPlaying = false;
+#endif
+    }
+
+    public void SetIsTutorial(bool isTutorial)
+    {
+        InTutorial = isTutorial;
     }
 
 }

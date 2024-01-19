@@ -25,7 +25,7 @@ public class PlacementCube : MonoBehaviour
         countdown = StartingCountdown;
 
         Color currentColour = GetComponent<MeshRenderer>().material.color;
-        currentColour.a = 0.0f;
+        currentColour.a = minAlpha;
 
         GetComponent<MeshRenderer>().material.color = currentColour;
 
@@ -72,12 +72,17 @@ public class PlacementCube : MonoBehaviour
 
     public void RestartCountdown()
     {
+        if (StartImmediately)
+        {
+            return;
+        }
         CountingDown = false;
+
         //countdown = StartingCountdown;
         alphaChangeDirection = 1.0f;
         alphaValue = -0.1f;        
         Color currentColour = GetComponent<MeshRenderer>().material.color;
-        currentColour.a = 0.0f;
+        currentColour.a = minAlpha;
 
         GetComponent<MeshRenderer>().material.color = currentColour;
     }

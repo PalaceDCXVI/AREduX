@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7376459786343609486}
   - component: {fileID: 7543848034581082309}
   - component: {fileID: 2949777403569545541}
+  - component: {fileID: -4033626626507270354}
   m_Layer: 0
   m_Name: ConicalGrabPointer
   m_TagString: Untagged
@@ -136,6 +137,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sphereMaterial: {fileID: 2100000, guid: 0e2b5266babec3c4d90d591bc4f5ab8e, type: 2}
   dotMaterial: {fileID: 2100000, guid: 1209710603edc1c47b271f98a38a3482, type: 2}
+--- !u!114 &-4033626626507270354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507865967819406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf3c51694f7fab344a342179736090a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3601038615599929105
 GameObject:
   m_ObjectHideFlags: 0

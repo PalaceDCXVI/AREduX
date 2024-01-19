@@ -38,6 +38,39 @@ public class BreadmakingScript : MonoBehaviour
             transform.localPosition = Vector3.zero;
             transform.localRotation = Quaternion.identity;
         }
+
+        for (int i = 0; i < TomatoSlots.Count && i < totalFilledTomatoSlots; i++)
+        {
+            if (TomatoSlots[i].GetComponent<Renderer>())
+            {
+                TomatoSlots[i].GetComponent<Renderer>().enabled = false;
+            }
+        }
+
+        for (int i = 0; i < TurkeySlots.Count && i < totalFilledTurkeySlots; i++)
+        {
+            if (TurkeySlots[i].GetComponent<Renderer>())
+            {
+                TurkeySlots[i].GetComponent<Renderer>().enabled = false;
+            }
+        }
+
+        for (int i = 0; i < PickleSlots.Count && i < totalFilledPickleSlots; i++)
+        {
+            if (PickleSlots[i].GetComponent<Renderer>())
+            {
+                PickleSlots[i].GetComponent<Renderer>().enabled = false;
+            }
+        }
+
+        if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
+            !breadSlotInUse)
+        {
+            if (Breadslot.GetComponent<Renderer>())
+            {
+                Breadslot.GetComponent<Renderer>().enabled = true;
+            }
+        }
     }
 
     public void ResetScript()
@@ -68,6 +101,7 @@ public class BreadmakingScript : MonoBehaviour
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
+                collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
                 collision.transform.SetParent(TomatoSlots[filledTomatoSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -100,6 +134,7 @@ public class BreadmakingScript : MonoBehaviour
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
+                collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
                 collision.transform.SetParent(TurkeySlots[filledTurkeySlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -133,6 +168,7 @@ public class BreadmakingScript : MonoBehaviour
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
+                collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
                 collision.transform.SetParent(PickleSlots[filledPickleSlots].transform, true);
                 collision.transform.localPosition = Vector3.zero;
@@ -179,6 +215,7 @@ public class BreadmakingScript : MonoBehaviour
                 if (gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
                 {
                     Transform targetTransform = collision.transform.GetComponent<BreadmakingScript>().Breadslot.transform;
+                    gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
                     transform.position = targetTransform.position;
                     transform.rotation = targetTransform.rotation;
                 }
@@ -188,6 +225,7 @@ public class BreadmakingScript : MonoBehaviour
                 {
                     collision.transform.localPosition = Vector3.zero;
                     collision.transform.localRotation = Quaternion.identity;
+                    collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
                 }
 
                 Vector3 fullCenter = new Vector3(0.00150859414f,-0.00650000013f,0.000175608337f);
@@ -209,6 +247,15 @@ public class BreadmakingScript : MonoBehaviour
 
                 Debug.Log("Sandwich Made");
             }
+        }
+    }
+
+    public void TrySetBreadSlotPlacementIsVisibile(GameObject breadSlice)
+    {
+        if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
+            !breadSlotInUse)
+        {
+            breadSlice.GetComponent<Renderer>().enabled = true;
         }
     }
 

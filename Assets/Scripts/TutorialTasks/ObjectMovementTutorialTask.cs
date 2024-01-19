@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ObjectMovementTutorialTask : ScenarioTask
 {
-    void Start()
+    override protected void Start()
     {
         base.Start();
         IsTutorialTask = true;
+        ScenarioManager.Instance.InTutorial = true;
     }
 
-    void Update()
+    override protected void Update()
     {
         base.Update();
     }

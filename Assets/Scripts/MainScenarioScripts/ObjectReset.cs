@@ -8,9 +8,6 @@ public class ObjectReset : MonoBehaviour
 {
     public Transform ResetParent;
     public Transform ResetTransform;
-    private Vector3 ResetTransformWorldPosition = new Vector3();
-    private Vector3 ResetTransformLocalPosition = new Vector3();
-    private Quaternion ResetTransformRotation = Quaternion.identity;
     public bool UseLocalPosition = false;
     public Rigidbody ResetRigidbody;
 
@@ -20,23 +17,18 @@ public class ObjectReset : MonoBehaviour
     private Vector3 ResetColliderCenter = new Vector3();
     public bool ColliderIsDefaultEnabled = true;
 
-    private Vector3 startingPosition = new Vector3();
-    private Quaternion startingRotation = new Quaternion();
+    public Vector3 startingPosition = new Vector3();
+    public Quaternion startingRotation = new Quaternion();
 
     public Color OriginalColor;
     public bool IsDefualtEnabled;
     public bool IsMovableOnReset = true;
 
+    public bool RendererEnabledByDefault = true;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (ResetTransform)
-        {
-            ResetTransformWorldPosition = ResetTransform.position;
-            ResetTransformLocalPosition = ResetTransform.localPosition;
-            ResetTransformRotation = ResetTransform.rotation;
-        }
-
         ResetParent = this.transform.parent;
         if (ResetColliderData)
         {
@@ -44,7 +36,15 @@ public class ObjectReset : MonoBehaviour
             ResetColliderCenter = GetComponent<BoxCollider>().center;
         }
 
-        startingPosition = this.transform.position;
+        if (UseLocalPosition)
+        {
+            startingPosition = this.transform.localPosition;
+        }
+        else 
+        {
+            startingPosition = this.transform.position;
+        }
+
         startingRotation = this.transform.rotation;
 
         OriginalColor = GetComponentInChildren<Renderer>().material.color;
@@ -59,8 +59,16 @@ public class ObjectReset : MonoBehaviour
 
     public void UpdateResetPositionAndRotation()
     {
-        startingPosition = this.transform.position;
-        startingRotation = this.transform.rotation;
+        if (UseLocalPosition)
+        {
+            //Do nothing here actually.
+            //startingPosition = this.transform.localPosition;
+        }
+        else
+        {
+            startingPosition = this.transform.position;
+            startingRotation = this.transform.rotation;
+        }
     }
     
     public void ResetMaterialColour()
@@ -81,18 +89,26 @@ public class ObjectReset : MonoBehaviour
 
         if (ResetTransform == null)
         {
-            this.transform.SetPositionAndRotation(startingPosition, startingRotation);
+            if (UseLocalPosition)
+            {
+                this.transform.localPosition = startingPosition;
+                this.transform.rotation = startingRotation;
+            }
+            else
+            {
+                this.transform.SetPositionAndRotation(startingPosition, startingRotation);
+            }
         }
         else 
         {
             if (UseLocalPosition)
             {
-                this.transform.localPosition = ResetTransformLocalPosition;
-                this.transform.rotation = ResetTransformRotation;
+                this.transform.localPosition = ResetTransform.localPosition;
+                this.transform.rotation = ResetTransform.rotation;
             }
             else
             {
-                this.transform.SetPositionAndRotation(ResetTransformWorldPosition, ResetTransformRotation);
+                this.transform.SetPositionAndRotation(ResetTransform.position, ResetTransform.rotation);
             }
         }
 
@@ -125,6 +141,11 @@ public class ObjectReset : MonoBehaviour
         if (GetComponent<ObjectManipulator>() && GetComponent<ObjectManipulator>().enabled == false && IsMovableOnReset == true)
         {
             GetComponent<ObjectManipulator>().enabled = true;
+        }
+
+        if (GetComponent<Renderer>())
+        {
+            GetComponent<Renderer>().enabled = RendererEnabledByDefault;
         }
 
         this.gameObject.SetActive(overrideIsActive ? true : IsDefualtEnabled);

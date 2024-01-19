@@ -9,6 +9,7 @@ public class ScenarioTask : MonoBehaviour
 
     public AudioClip startingAudioClip;
     public AudioClip startingAudioClipWithAphasia;
+    public AudioClip TutorialAudio;
     
     public bool WaitForAudioClipCompletion = true;
     public float audioClipTime = 0.00f;
@@ -18,6 +19,9 @@ public class ScenarioTask : MonoBehaviour
     public UnityEvent OnTaskBegin;
 
     public UnityEvent OnTaskComplete;
+
+    public UnityEvent OnStartingAudioClipEnd;
+    public bool AudioClipInvoked = false;
 
     public UnityEvent OnTaskReset;
 
@@ -41,6 +45,11 @@ public class ScenarioTask : MonoBehaviour
         {
             internalAudioClipTime += startingAudioClipWithAphasia.length;
         }
+
+        if (TutorialAudio != null)
+        {
+            internalAudioClipTime = TutorialAudio.length;
+        }
     }
 
     public virtual void StartTask()
@@ -49,7 +58,11 @@ public class ScenarioTask : MonoBehaviour
 
         if (!ScenarioManager.AphasiaAudio)
         {
-            if (startingAudioClip != null)
+            if (TutorialAudio != null && ScenarioManager.Instance.InTutorial)
+            {
+                AudioPromptManager.Instance.PlayAudioClip(TutorialAudio); 
+            }
+            else if (startingAudioClip != null)
             {
                 AudioPromptManager.Instance.PlayAudioClip(startingAudioClip);
             }
@@ -83,6 +96,7 @@ public class ScenarioTask : MonoBehaviour
         hasEnded = false;
         internalAudioClipTime = audioClipTime;
         audioHasCompleted = false;
+        AudioClipInvoked = false;
 
         OnTaskReset.Invoke();
     }
@@ -93,6 +107,11 @@ public class ScenarioTask : MonoBehaviour
         if (hasStarted)
         {
             internalAudioClipTime -= Time.deltaTime;
+        }
+        if (internalAudioClipTime <= 0 && !AudioClipInvoked)
+        {
+            OnStartingAudioClipEnd.Invoke();
+            AudioClipInvoked = true;
         }
         if (hasEnded && WaitForAudioClipCompletion && internalAudioClipTime <= 0.0f && !audioHasCompleted)
         {
