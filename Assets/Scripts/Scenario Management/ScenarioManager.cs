@@ -24,6 +24,9 @@ public class ScenarioManager : MonoBehaviour
 
     public bool StartSimulationOnStart = false;
 
+    public AudioClip AppLoadClip = null;
+    public AudioClip EndingAudioClip = null;
+
     public bool ScenarioHasStarted { get; private set; }
     public bool finishedTasks = false;
 
@@ -98,6 +101,11 @@ public class ScenarioManager : MonoBehaviour
         if (PlayerPrefs.HasKey(DementiaAffectAudioSwitch.DementiaAffectedAudioEnabledKey))
         {
             AphasiaAudio = PlayerPrefs.GetInt(DementiaAffectAudioSwitch.DementiaAffectedAudioEnabledKey) > 0 ? true : false;
+        }
+        
+        if (!StartSimulationOnStart && AppLoadClip != null)
+        {
+            AudioPromptManager.Instance.PlayAudioClip(AppLoadClip);
         }
     }
 
@@ -225,6 +233,11 @@ public class ScenarioManager : MonoBehaviour
 #else
         EditorApplication.isPlaying = false;
 #endif
+    }
+
+    public void PlayEndingClip()
+    {
+        AudioPromptManager.Instance.PlayAudioClip(EndingAudioClip);
     }
 
     public void SetIsTutorial(bool isTutorial)
