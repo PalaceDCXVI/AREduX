@@ -144,7 +144,10 @@ public class ScenarioManager : MonoBehaviour
             else
             {
                 finishedTasks = true;
-                SimulationDataManager.Instance.SaveData();
+                if (SimulationDataManager.Instance)
+                {
+                    SimulationDataManager.Instance.SaveData();
+                }
                 OnScenarioEnd.Invoke();
             }
         }

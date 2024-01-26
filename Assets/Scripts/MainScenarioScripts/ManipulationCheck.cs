@@ -41,7 +41,10 @@ public class ManipulationCheck : MonoBehaviour
 
             if (!wasSlotted)
             {
-                SimulationDataManager.Instance.AddIncorrectPlacement();
+                if (SimulationDataManager.Instance)
+                {
+                    SimulationDataManager.Instance.AddIncorrectPlacement();
+                }
             }
             wasSlotted = false;
         }

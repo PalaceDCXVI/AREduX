@@ -7,24 +7,30 @@ public class DrawerConstraint : MonoBehaviour
     public float minDistance = 0;
     public float maxDistance = 0;
 
-    public float startLocation = 0;
+    public Vector3 startLocation = Vector3.zero;
+
+    Quaternion startingLocalRotation = Quaternion.identity;
+
     // Start is called before the first frame update
     void Start()
     {
-        startLocation = transform.position.z;
+        startLocation = transform.localPosition;
+        startingLocalRotation = transform.localRotation;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.z > startLocation + maxDistance)
+        if (transform.localPosition.x > startLocation.x + maxDistance)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, startLocation + maxDistance /*transform.position.z*/);
+            transform.localPosition = new Vector3(startLocation.x - minDistance, transform.localPosition.y, transform.localPosition.z /*transform.position.z*/);
         }
 
-        if (transform.position.z < startLocation - minDistance)
+        if (transform.localPosition.x < startLocation.x - minDistance)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, startLocation - minDistance /*transform.position.z*/);
+            transform.localPosition = new Vector3(startLocation.x - minDistance, transform.localPosition.y, transform.localPosition.z  /*transform.position.z*/);
         }
+
+        //transform.localRotation= startingLocalRotation;
     }
 }

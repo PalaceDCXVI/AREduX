@@ -335,7 +335,10 @@ public class MaterialManager : MonoBehaviour
 
     public void HandIsTouchingObject(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
     {
-        SimulationDataManager.Instance.AddGrasp(Vector3.Distance(manipulationEventData.ManipulationSource.transform.position, manipulationEventData.PointerCentroid), manipulationEventData.Pointer.SphereCastRadius);
+        if (SimulationDataManager.Instance)
+        {
+            SimulationDataManager.Instance.AddGrasp(Vector3.Distance(manipulationEventData.ManipulationSource.transform.position, manipulationEventData.PointerCentroid), manipulationEventData.Pointer.SphereCastRadius);
+        }
 
         //switch (highlightType)
         //{
