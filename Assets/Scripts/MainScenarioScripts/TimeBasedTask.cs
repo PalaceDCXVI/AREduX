@@ -14,11 +14,21 @@ public class TimeBasedTask : ScenarioTask
         {
             if (!ScenarioManager.AphasiaAudio)
             {
-                TaskTime = startingAudioClip.length;
+                if (TutorialAudio != null && ScenarioManager.Instance.InTutorial)
+                {
+                    TaskTime = TutorialAudio.length;
+                }
+                else if (StartingAudioClip != null)
+                {
+                    TaskTime = StartingAudioClip.length;
+                }
             }
             else
             {
-                TaskTime = startingAudioClipWithAphasia.length;
+                if (StartingAudioClipWithAphasia)
+                {
+                    TaskTime = StartingAudioClipWithAphasia.length;
+                }
             }
         }
     }

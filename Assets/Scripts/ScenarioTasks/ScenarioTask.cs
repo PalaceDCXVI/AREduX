@@ -7,10 +7,10 @@ public class ScenarioTask : MonoBehaviour
 {
     public string TaskName = "Unnamed Task";
 
-    public AudioClip startingAudioClip;
-    public AudioClip startingAudioClipWithAphasia;
-    public AudioClip TutorialAudio;
-    
+    public AudioClip StartingAudioClip; public string StartingAudioClipSubtitle = "";
+    public AudioClip StartingAudioClipWithAphasia; public string StartingAudioClipWithAphasiaSubtitle = "";
+    public AudioClip TutorialAudio; public string TutorialAudioSubtitle = "";
+
     public bool WaitForAudioClipCompletion = true;
     public float audioClipTime = 0.00f;
     private float internalAudioClipTime = 0.00f;
@@ -37,13 +37,13 @@ public class ScenarioTask : MonoBehaviour
     {
         internalAudioClipTime = audioClipTime;
 
-        if (!ScenarioManager.AphasiaAudio && startingAudioClip)
+        if (!ScenarioManager.AphasiaAudio && StartingAudioClip)
         {
-            internalAudioClipTime += startingAudioClip.length;
+            internalAudioClipTime += StartingAudioClip.length;
         }
-        else if (ScenarioManager.AphasiaAudio && startingAudioClipWithAphasia)
+        else if (ScenarioManager.AphasiaAudio && StartingAudioClipWithAphasia)
         {
-            internalAudioClipTime += startingAudioClipWithAphasia.length;
+            internalAudioClipTime += StartingAudioClipWithAphasia.length;
         }
 
         if (TutorialAudio != null)
@@ -60,18 +60,18 @@ public class ScenarioTask : MonoBehaviour
         {
             if (TutorialAudio != null && ScenarioManager.Instance.InTutorial)
             {
-                AudioPromptManager.Instance.PlayAudioClip(TutorialAudio); 
+                AudioPromptManager.Instance.PlayAudioClip(TutorialAudio, TutorialAudioSubtitle); 
             }
-            else if (startingAudioClip != null)
+            else if (StartingAudioClip != null)
             {
-                AudioPromptManager.Instance.PlayAudioClip(startingAudioClip);
+                AudioPromptManager.Instance.PlayAudioClip(StartingAudioClip, StartingAudioClipSubtitle);
             }
         }
         else
         {
-            if (startingAudioClipWithAphasia != null)
+            if (StartingAudioClipWithAphasia != null)
             {
-                AudioPromptManager.Instance.PlayAudioClip(startingAudioClipWithAphasia);
+                AudioPromptManager.Instance.PlayAudioClip(StartingAudioClipWithAphasia, StartingAudioClipWithAphasiaSubtitle);
             }
         }
 

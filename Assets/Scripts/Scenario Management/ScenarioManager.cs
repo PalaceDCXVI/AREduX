@@ -25,11 +25,14 @@ public class ScenarioManager : MonoBehaviour
     public bool StartSimulationOnStart = false;
 
     public AudioClip AppLoadClip = null;
+    public string AppLoadClipSubtitle = "";
     public AudioClip EndingAudioClip = null;
+    public string EndingAudioClipSubtitle = "";
 
     public bool ScenarioHasStarted { get; private set; }
     public bool finishedTasks = false;
 
+    public UnityEvent OnScenarioBegin;
     public UnityEvent OnScenarioEnd;
     public UnityEvent OnScenarioRestart;
 
@@ -86,6 +89,7 @@ public class ScenarioManager : MonoBehaviour
             if (StartSimulationOnStart)
             {
                 ScenarioHasStarted = true;
+                OnScenarioBegin.Invoke();
                 currentTask.StartTask();
             }
         }
@@ -105,13 +109,18 @@ public class ScenarioManager : MonoBehaviour
         
         if (!StartSimulationOnStart && AppLoadClip != null)
         {
-            AudioPromptManager.Instance.PlayAudioClip(AppLoadClip);
+            AudioPromptManager.Instance.PlayAudioClip(AppLoadClip, AppLoadClipSubtitle);
         }
     }
 
     private void Update()
     {
 
+    }
+
+    public void SetAphasiaAudio(bool UseAphasiaAudio)
+    {
+        AphasiaAudio = UseAphasiaAudio;
     }
 
     public void AdvanceCurrentTask()
@@ -155,7 +164,11 @@ public class ScenarioManager : MonoBehaviour
 
     public void StartScenario()
     {
-        ScenarioHasStarted = true;
+        if (!ScenarioHasStarted)
+        {
+            ScenarioHasStarted = true;
+            OnScenarioBegin.Invoke();
+        }
     }
 
     public void ResetScenario()
@@ -240,7 +253,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void PlayEndingClip()
     {
-        AudioPromptManager.Instance.PlayAudioClip(EndingAudioClip);
+        AudioPromptManager.Instance.PlayAudioClip(EndingAudioClip, EndingAudioClipSubtitle);
     }
 
     public void SetIsTutorial(bool isTutorial)

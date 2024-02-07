@@ -150,4 +150,15 @@ public class ObjectReset : MonoBehaviour
 
         this.gameObject.SetActive(overrideIsActive ? true : IsDefualtEnabled);
     }
+
+    public void ResetRigidBody()
+    {
+        if (GetComponent<Rigidbody>())
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().useGravity = true;
+        }
+    }
 }
