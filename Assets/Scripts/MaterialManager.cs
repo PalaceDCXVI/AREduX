@@ -262,9 +262,16 @@ public class MaterialManager : MonoBehaviour
                                 ///hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
                                 Debug.Log(grabbableObjectPos);
-                                hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
-                                    //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetVector(colourPropertyName, originalHandFillColor);
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+                                
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetVector(colourPropertyName, originalHandFillColor);
                             }
                         }
                     }
@@ -327,9 +334,16 @@ public class MaterialManager : MonoBehaviour
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
                                 Debug.Log(grabbableObjectPos);
-                                hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
-                                    //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor(colourPropertyName, selectionAlterationColor);
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+                                    
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor(colourPropertyName, selectionAlterationColor);
                             }
                         }
                     }

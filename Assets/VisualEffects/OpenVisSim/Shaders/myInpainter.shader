@@ -47,7 +47,7 @@ Shader "Hidden/VisSim/myInpainter"
 		degcoords = degcoords*.5 + .25; // map 0-1 to 0.25-0.75 (i.e., since deg tex is twice as big) [this has to be a hack! must be a better way of doing this...)
 
 										// is this necessary???
-		degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
+		//degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
 
 		float4 offsetX = tex2D(_OffsetTextureX, degcoords);
 		float4 offsetY = tex2D(_OffsetTextureY, degcoords);
@@ -84,7 +84,7 @@ Shader "Hidden/VisSim/myInpainter"
 		degcoords = degcoords*.5 + .25; // map 0-1 to 0.25-0.75 (i.e., since deg tex is twice as big) [this has to be a hack! must be a better way of doing this...)
 
 		// is this necessary???
-		degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
+		//degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
 
 		float4 warpEdges = tex2D(_BlurTexture, degcoords);
 
@@ -123,7 +123,7 @@ Shader "Hidden/VisSim/myInpainter"
 		degcoords = degcoords*.5 + .25; // map 0-1 to 0.25-0.75 (i.e., since deg tex is twice as big) [this has to be a hack! must be a better way of doing this...)
 
 		// is this necessary???
-		degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
+		//degcoords = UnityStereoScreenSpaceUVAdjust(degcoords, _Overlay_ST);
 
 		float4 warpEdges = tex2D(_BlurTexture, degcoords);
 

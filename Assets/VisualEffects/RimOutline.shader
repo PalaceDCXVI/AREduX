@@ -111,16 +111,16 @@ Shader "Mixed Reality Toolkit/RimOutline"
                 float3 emission = rimColor * (rimPower);
 
                 float3 color = _Color.rgb;
-                float distanceToObject = pow(1.0 - distance(_GrabbableObjectPos.xyz, i.worldPos), 30.0);
+                float distanceToObject = pow(1.02 - distance(_GrabbableObjectPos.xyz, i.worldPos), 30.0);
                 if (distanceToObject > 0.0f)
                 {
-                    distanceToObject += 0.01f;
+                    distanceToObject += 0.001f;
                 }
                 if (_HighlightHand == 0.0f)
                 {
                     distanceToObject = 0;
                 }
-                float3 directionToObject = float3(distanceToObject, distanceToObject, distanceToObject);
+                float3 directionToObject = float3(distanceToObject, distanceToObject, 0);// distanceToObject, distanceToObject);
                 
                 float4 output = fixed4(color + emission + directionToObject, 1);
                 return output;
