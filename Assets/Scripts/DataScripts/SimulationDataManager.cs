@@ -19,19 +19,24 @@ public class SimulationDataManager : MonoBehaviour
         public double ScenarioCompletionTime;
         public double AccuracyRate;
         public double ErrorRate;
+        public int TotalGraspAttempts = 0;
+        public int TotalCompletedGrasps = 0;
+        public double TotalGraspDistance = 0.0;
+        public int IncorrectPlacements = 0;
     }
 
     public List<SimulationData> Simulations;
 
 
-    public double CurrentSimulationTime = 0.0f;
     public bool CurrentlyInSimulation = false;
 
+    public double CurrentSimulationTime = 0.0f;
     public int CurrentGraspAttempts = 0;
     public int CurrentCompletedGrasps = 0;
     public double CurrentTotalGraspDistance = 0.0;
     public double CurrentAccuracyRate = 0.0;
     public double CurrentErrorRate = 0.0;
+    public int CurrentIncorrectPlacements = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +66,7 @@ public class SimulationDataManager : MonoBehaviour
         string json = "";
         foreach (SimulationData simData in Simulations)
         {
-            json += JsonUtility.ToJson(simData);
+            json += JsonUtility.ToJson(simData) + "\n";
         }
 
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, System.DateTime.Now.DayOfWeek.ToString() + System.DateTime.Now.Hour.ToString() + System.DateTime.Now.Minute.ToString());
@@ -96,6 +101,10 @@ public class SimulationDataManager : MonoBehaviour
             SetScenarioTime(simulation);
             SetAccuracyRate(simulation);
             SetErrorRate(simulation);
+            simulation.TotalGraspAttempts = CurrentGraspAttempts;
+            simulation.TotalCompletedGrasps = CurrentCompletedGrasps;
+            simulation.TotalGraspDistance = CurrentTotalGraspDistance;
+            simulation.IncorrectPlacements = CurrentIncorrectPlacements;
 
             Simulations.Add(simulation);
         }
@@ -108,6 +117,7 @@ public class SimulationDataManager : MonoBehaviour
             CurrentTotalGraspDistance = 0.0;
             CurrentAccuracyRate = 0.0;
             CurrentErrorRate = 0.0;
+            CurrentIncorrectPlacements = 0;
         }
     }
 
@@ -151,6 +161,7 @@ public class SimulationDataManager : MonoBehaviour
             //CurrentAccuracyRate = (sphereDistance - distance)/sphereDistance
             CurrentAccuracyRate = ((sphereDistance * (double)CurrentCompletedGrasps) - CurrentTotalGraspDistance) / (sphereDistance * (double)CurrentCompletedGrasps);
             CurrentErrorRate = ((double)CurrentGraspAttempts / (double)CurrentCompletedGrasps);
+            CurrentErrorRate = (CurrentErrorRate == 0 ? 1 : CurrentErrorRate);
             //where R is the radius of the collision sphere and d is the Euclidean distance between the sphere and the nearest object that can be grabbed.
         }
     }
@@ -159,7 +170,7 @@ public class SimulationDataManager : MonoBehaviour
     {
         if (CurrentlyInSimulation)
         {
-
+            CurrentIncorrectPlacements += 1;
         }
     }
 

@@ -12,5 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/CursorsTest.unity
     guid: af3dba2bb2292654fb537722998ed67c
   m_configObjects:
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 626929e7bc8fa784a99fdc12f2e41172, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 56c5bb70cc6687544b90208b384d5b47, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: da54f936afc25f24ea563631edf5c8cb, type: 2}

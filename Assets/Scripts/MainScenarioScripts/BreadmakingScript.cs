@@ -66,6 +66,10 @@ public class BreadmakingScript : MonoBehaviour
         if (totalFilledTomatoSlots == TomatoSlots.Count && totalFilledTurkeySlots == TurkeySlots.Count && totalFilledPickleSlots == PickleSlots.Count &&
             !breadSlotInUse)
         {
+            if (GetComponent<ManipulationCheck>())
+            {
+                GetComponent<ManipulationCheck>().CanBePlacedIncorrectly = true;
+            }
             if (Breadslot.GetComponent<Renderer>())
             {
                 Breadslot.GetComponent<Renderer>().enabled = true;

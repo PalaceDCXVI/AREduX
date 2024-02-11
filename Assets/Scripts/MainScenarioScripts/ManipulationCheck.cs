@@ -9,6 +9,7 @@ public class ManipulationCheck : MonoBehaviour
     private ObjectManipulator manipulator;
 
     public bool CanBePlacedWhileBeingManipulated = true;
+    public bool CanBePlacedIncorrectly = false;
 
     public float TimeDelayForSlotting = 1.0f;
     private float currentDelay = 0.0f;
@@ -37,15 +38,16 @@ public class ManipulationCheck : MonoBehaviour
         }
         else if (currentDelay < 0.0f && !isBeingManipulated)
         {
-            canBeSlotted = false;
-
-            if (!wasSlotted)
+            if (canBeSlotted && !wasSlotted && CanBePlacedIncorrectly)
             {
                 if (SimulationDataManager.Instance)
                 {
                     SimulationDataManager.Instance.AddIncorrectPlacement();
                 }
             }
+
+            canBeSlotted = false;
+
             wasSlotted = false;
         }
     }
@@ -53,6 +55,11 @@ public class ManipulationCheck : MonoBehaviour
     public bool CanBeSlotted()
     {
         return canBeSlotted;
+    }
+
+    public void SetCanBeMisplaced(bool canBeMisplaced)
+    {
+        CanBePlacedIncorrectly = canBeMisplaced;
     }
 
     private void OnManipulationStart(ManipulationEventData arg0)

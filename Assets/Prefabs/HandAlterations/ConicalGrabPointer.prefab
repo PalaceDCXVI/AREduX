@@ -79,7 +79,7 @@ MonoBehaviour:
   defaultPointerExtent: 10
   sphereCastRadius: 0.05
   pullbackDistance: 0.08
-  nearObjectSectorAngle: 66
+  nearObjectSectorAngle: 360
   nearObjectMargin: 0.2
   nearObjectAxisLerp: 0.9
   nearObjectSmoothingFactor: 0.4
@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf3c51694f7fab344a342179736090a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deadPanel: {fileID: 0}
 --- !u!1 &3601038615599929105
 GameObject:
   m_ObjectHideFlags: 0

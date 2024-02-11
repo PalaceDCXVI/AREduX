@@ -4,6 +4,7 @@ using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class HandsManager : MonoBehaviour
 {
@@ -36,16 +37,22 @@ public class HandsManager : MonoBehaviour
         leftHandIsGrabbing = CheckHandIsGrabbing(Handedness.Left);
         if (!previousLeftHandIsGrabbing && leftHandIsGrabbing)
         {
-            Debug.Log("Left Hand Grab Event");
-            SimulationDataManager.Instance.AddGraspAttempt();
+            if (Physics.CheckSphere(HandJointService.RequestJointTransform(TrackedHandJoint.IndexTip, Handedness.Left).position, SphereCursor.KnownSphereCastRadius * 2.0f))
+            {
+                Debug.Log("Left Hand Grab Event");
+                SimulationDataManager.Instance.AddGraspAttempt();
+            }
         }
 
         var rightHandPose = GetHandPose(Handedness.Right, previousRightHandPose != null);
         rightHandIsGrabbing = CheckHandIsGrabbing(Handedness.Right);
         if (!previousRightHandIsGrabbing && rightHandIsGrabbing)
         {
-            Debug.Log("Right Hand Grab Event");
-            SimulationDataManager.Instance.AddGraspAttempt();
+            if (Physics.CheckSphere(HandJointService.RequestJointTransform(TrackedHandJoint.IndexTip, Handedness.Right).position, SphereCursor.KnownSphereCastRadius * 2.0f))
+            {
+                Debug.Log("Right Hand Grab Event");
+                SimulationDataManager.Instance.AddGraspAttempt();
+            }
         }
 
         previousLeftHandPose = leftHandPose;

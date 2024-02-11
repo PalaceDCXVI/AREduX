@@ -8,6 +8,9 @@ using Microsoft.MixedReality.Toolkit.Input;
 
 public class SphereCursor : MonoBehaviour
 {
+    static public float KnownSphereCastRadius = 0.05f;
+
+
     SpherePointer spherePointer = null; 
     GameObject sphere = null;
     public Material sphereMaterial = null;
@@ -18,6 +21,7 @@ public class SphereCursor : MonoBehaviour
         spherePointer = GetComponent<SpherePointer>();
         
         sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        KnownSphereCastRadius = spherePointer.SphereCastRadius;
         float scale = spherePointer.SphereCastRadius;
         sphere.transform.localScale = new Vector3(scale, scale, scale);
         sphere.transform.SetParent(this.transform, false);

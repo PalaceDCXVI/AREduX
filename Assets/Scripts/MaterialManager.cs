@@ -96,6 +96,8 @@ public class MaterialManager : MonoBehaviour
                 handRenderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
             }
         }
+
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
     }
 
     public List<HighlightType> GenerateRandomLoop(List<HighlightType> listToShuffle)
@@ -113,6 +115,9 @@ public class MaterialManager : MonoBehaviour
     public void SetHighlightType(HighlightType type)
     {
         highlightType = type;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
     }
 
     public void SetHighlightTypeToCurrent()
@@ -125,6 +130,8 @@ public class MaterialManager : MonoBehaviour
         {
             highlightType = OrderOfHighlightTypes[currentHighlightIndex];
         }
+
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
     }
 
     public void IncrementHighlightType(bool bypassTutorialChange = false)
@@ -149,31 +156,43 @@ public class MaterialManager : MonoBehaviour
     public void SetHighlightTypeToObject()
     {
         highlightType = HighlightType.ObjectHighlight;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     public void SetHighlightTypeToHand()
     {
         highlightType = HighlightType.HandHighlight;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
     }
 
     public void SetHighlightTypeToDot()
     {
         highlightType = HighlightType.DotCursor;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     public void SetHighlightTypeToSpherical()
     {
         highlightType = HighlightType.SphericalCursor;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     public void SetHighlightTypeToSeeThrough()
     {
         highlightType = HighlightType.Seethrough;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     public void SetHighlightTypeToNone()
     {
         highlightType = HighlightType.None;
+        currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     public static void ToOpaqueMode(Material material)
@@ -182,10 +201,12 @@ public class MaterialManager : MonoBehaviour
         material.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.One);
         material.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.Zero);
         material.SetInt("_ZWrite", 1);
-        material.DisableKeyword("_ALPHATEST_ON");
+        //material.DisableKeyword("_ALPHATEST_ON");
         material.DisableKeyword("_ALPHABLEND_ON");
         material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = -1;
+        material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+        //material.renderQueue = -1;
+        material.SetFloat("_Mode", 0.0f);
     }
  
     public static void ToFadeMode(Material material)
@@ -194,10 +215,11 @@ public class MaterialManager : MonoBehaviour
         material.SetInt("_SrcBlend", (int) UnityEngine.Rendering.BlendMode.SrcAlpha);
         material.SetInt("_DstBlend", (int) UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
         material.SetInt("_ZWrite", 0);
-        material.DisableKeyword("_ALPHATEST_ON");
+        //material.DisableKeyword("_ALPHATEST_ON");
         material.EnableKeyword("_ALPHABLEND_ON");
         material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent;
+        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent+1;
+        material.SetFloat("_Mode", 2.0f);
     }
 
     public static void ToTransparentMode(Material material)
@@ -206,10 +228,11 @@ public class MaterialManager : MonoBehaviour
         material.SetFloat("_SrcBlend", (float)UnityEngine.Rendering.BlendMode.One);
         material.SetFloat("_DstBlend", (float)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
         material.SetFloat("_ZWrite", 0.0f);
-        material.DisableKeyword("_ALPHATEST_ON");
+        //material.DisableKeyword("_ALPHATEST_ON");
         material.DisableKeyword("_ALPHABLEND_ON");
         material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
-        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent;
+        material.renderQueue = (int) UnityEngine.Rendering.RenderQueue.Transparent+1;
+        material.SetFloat("_Mode", 2.0f);
     }
 
     public void HandIsFloating(Microsoft.MixedReality.Toolkit.UI.ManipulationEventData manipulationEventData)
@@ -236,7 +259,7 @@ public class MaterialManager : MonoBehaviour
                         //if material rendering mode is not set to transparent already
                         if (!(mat.GetInt("_SrcBlend") == (int)UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
                         {
-                            ToOpaqueMode(mat);
+                            //ToOpaqueMode(mat);
                         }
                     }
                     objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();

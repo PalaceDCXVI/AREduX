@@ -8,7 +8,9 @@ public class ObjectReset : MonoBehaviour
 {
     public Transform ResetParent;
     public Transform ResetTransform;
+    public bool DoResetLocation = true;
     public bool UseLocalPosition = false;
+    public bool UseLocalRotation = false;
     public Rigidbody ResetRigidbody;
 
     public bool ReAddRigidBody = false;
@@ -25,6 +27,8 @@ public class ObjectReset : MonoBehaviour
     public bool IsMovableOnReset = true;
 
     public bool RendererEnabledByDefault = true;
+
+    private Material backupMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -45,10 +49,17 @@ public class ObjectReset : MonoBehaviour
             startingPosition = this.transform.position;
         }
 
-        startingRotation = this.transform.rotation;
+        if (UseLocalRotation)
+        {
+            startingRotation = this.transform.localRotation;
+        }
+        else
+        {
+            startingRotation = this.transform.rotation;
+        }
 
         OriginalColor = GetComponentInChildren<Renderer>().material.color;
-
+        backupMaterial = new Material(GetComponentInChildren<Renderer>().material);
     }
 
     // Update is called once per frame
@@ -76,8 +87,14 @@ public class ObjectReset : MonoBehaviour
         Renderer renderer = GetComponentInChildren<Renderer>();
         if (renderer)
         {
+            renderer.material.CopyPropertiesFromMaterial(backupMaterial);
+            foreach(var keyword in backupMaterial.shaderKeywords)
+            {
+                renderer.material.EnableKeyword(keyword);
+            }
             renderer.material.color = OriginalColor;
         }
+
     }
 
     public void ResetObject(bool overrideIsActive = false)
@@ -87,28 +104,31 @@ public class ObjectReset : MonoBehaviour
             transform.SetParent(ResetParent);
         }
 
-        if (ResetTransform == null)
+        if (DoResetLocation)
         {
-            if (UseLocalPosition)
+            if (ResetTransform == null)
             {
-                this.transform.localPosition = startingPosition;
-                this.transform.rotation = startingRotation;
+                if (UseLocalPosition)
+                {
+                    this.transform.localPosition = startingPosition;
+                    this.transform.rotation = startingRotation;
+                }
+                else
+                {
+                    this.transform.SetPositionAndRotation(startingPosition, startingRotation);
+                }
             }
-            else
+            else 
             {
-                this.transform.SetPositionAndRotation(startingPosition, startingRotation);
-            }
-        }
-        else 
-        {
-            if (UseLocalPosition)
-            {
-                this.transform.localPosition = ResetTransform.localPosition;
-                this.transform.rotation = ResetTransform.rotation;
-            }
-            else
-            {
-                this.transform.SetPositionAndRotation(ResetTransform.position, ResetTransform.rotation);
+                if (UseLocalPosition)
+                {
+                    this.transform.localPosition = ResetTransform.localPosition;
+                    this.transform.rotation = ResetTransform.rotation;
+                }
+                else
+                {
+                    this.transform.SetPositionAndRotation(ResetTransform.position, ResetTransform.rotation);
+                }
             }
         }
 
@@ -146,6 +166,7 @@ public class ObjectReset : MonoBehaviour
         if (GetComponent<Renderer>())
         {
             GetComponent<Renderer>().enabled = RendererEnabledByDefault;
+            ResetMaterialColour();
         }
 
         this.gameObject.SetActive(overrideIsActive ? true : IsDefualtEnabled);
