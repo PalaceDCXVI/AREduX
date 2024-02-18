@@ -18,8 +18,8 @@ public class MaterialManager : MonoBehaviour
         HandHighlight = 1,
         SphericalCursor = 2,
         DotCursor = 3,
-        Seethrough = 4,
-        None = 5
+        None = 4,
+        //Seethrough = int.MaxValue //Not used anymore.
     } 
 
     public HighlightType highlightType = HighlightType.None;
@@ -97,7 +97,7 @@ public class MaterialManager : MonoBehaviour
             }
         }
 
-        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
     }
 
     public List<HighlightType> GenerateRandomLoop(List<HighlightType> listToShuffle)
@@ -183,7 +183,7 @@ public class MaterialManager : MonoBehaviour
 
     public void SetHighlightTypeToSeeThrough()
     {
-        highlightType = HighlightType.Seethrough;
+        //ighlightType = HighlightType.Seethrough;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
@@ -249,23 +249,23 @@ public class MaterialManager : MonoBehaviour
             }
         break;
 
-        case HighlightType.Seethrough:
-            foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
-            {
-                if (objectRenderer.GetComponent<ObjectReset>())
-                {
-                    foreach (var mat in objectRenderer.materials)
-                    {
-                        //if material rendering mode is not set to transparent already
-                        if (!(mat.GetInt("_SrcBlend") == (int)UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
-                        {
-                            //ToOpaqueMode(mat);
-                        }
-                    }
-                    objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
-                }
-            }
-        break;
+        //case HighlightType.Seethrough:
+        //    foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
+        //    {
+        //        if (objectRenderer.GetComponent<ObjectReset>())
+        //        {
+        //            foreach (var mat in objectRenderer.materials)
+        //            {
+        //                //if material rendering mode is not set to transparent already
+        //                if (!(mat.GetInt("_SrcBlend") == (int)UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
+        //                {
+        //                    //ToOpaqueMode(mat);
+        //                }
+        //            }
+        //            objectRenderer.GetComponent<ObjectReset>()?.ResetMaterialColour();
+        //        }
+        //    }
+        //break;
 
         case HighlightType.HandHighlight:
             {
@@ -321,23 +321,23 @@ public class MaterialManager : MonoBehaviour
             }
         break;
 
-        case HighlightType.Seethrough:
-            foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
-            {
-                foreach (var mat in objectRenderer.materials)
-                {
-                    if (objectRenderer.GetComponent<ObjectReset>())
-                    {
-                        //if material rendering mode is not set to transparent already
-                        if (!(mat.GetInt("_SrcBlend") == (int)UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
-                        {
-                            ToFadeMode(mat);
-                            mat.color = new Color(objectRenderer.GetComponent<ObjectReset>().OriginalColor.r, objectRenderer.GetComponent<ObjectReset>().OriginalColor.g, objectRenderer.GetComponent<ObjectReset>().OriginalColor.b, SeethroughAlpha);
-                        }
-                    }
-                }
-            }
-        break;
+        //case HighlightType.Seethrough:
+        //    foreach (var objectRenderer in manipulationEventData.ManipulationSource.GetComponentsInChildren<Renderer>())
+        //    {
+        //        foreach (var mat in objectRenderer.materials)
+        //        {
+        //            if (objectRenderer.GetComponent<ObjectReset>())
+        //            {
+        //                //if material rendering mode is not set to transparent already
+        //                if (!(mat.GetInt("_SrcBlend") == (int)UnityEngine.Rendering.BlendMode.One && mat.GetFloat("_ZWrite") == 0.0f))
+        //                {
+        //                    ToFadeMode(mat);
+        //                    mat.color = new Color(objectRenderer.GetComponent<ObjectReset>().OriginalColor.r, objectRenderer.GetComponent<ObjectReset>().OriginalColor.g, objectRenderer.GetComponent<ObjectReset>().OriginalColor.b, SeethroughAlpha);
+        //                }
+        //            }
+        //        }
+        //    }
+        //break;
 
         case HighlightType.HandHighlight:
             {

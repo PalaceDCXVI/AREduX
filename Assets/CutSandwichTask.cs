@@ -28,6 +28,8 @@ public class CutSandwichTask : ScenarioTask
     public override void ResetScenario()
     {
         base.ResetScenario();
+        GetComponentInChildren<TutorialKnifeGuide>(true).CubesCut = false;
+        GetComponentInChildren<ForkCube>(true).ForkHighlight.SetActive(true);
         cutCubes = 0;
     }
 
@@ -37,6 +39,7 @@ public class CutSandwichTask : ScenarioTask
 
         if (totalNumberOfCutCubes == cutCubes) 
         {
+            GetComponentInChildren<TutorialKnifeGuide>(true).CubesCut = true;
             CompleteTask();
         }
     }

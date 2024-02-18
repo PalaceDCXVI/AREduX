@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -58,6 +59,13 @@ public class UtencilPlacement : MonoBehaviour
 
         //Debug.DrawLine(boundsMinPlane, boundsMaxPlane, Color.cyan, 30.0f);
         //Debug.DrawLine(boundsMinMaxPlane, boundsMaxMinPlane, Color.cyan, 30.0f);
+        //Debug.DrawLine(SpotToAvoid.position, SpotToAvoid.position + Vector3.up, Color.cyan);
+
+        //for (int i = 0; i < 8; i++)
+        //{
+        //    Vector3 endPosition = SpotToAvoid.position + ((Quaternion.AngleAxis((float)(i / 8.0f) * 360, Vector3.up) * transform.forward).normalized * AreaOfSpot);
+        //    Debug.DrawLine(SpotToAvoid.position, endPosition, Color.cyan, 30.0f);
+        //}
 
         for (int i = 0; i < Dimensions; i++)
         {
@@ -75,7 +83,7 @@ public class UtencilPlacement : MonoBehaviour
                 //debugPosition = transform.rotation * debugPosition;
                 //debugPosition += transform.position;
                 //Vector3 debugPosition = new Vector3(Random.Range(i + minimumDistance, i + 1.0f - minimumDistance) * (1.0f / Dimensions), plane.bounds.center.y, Random.Range(j + minimumDistance, j + 1.0f - minimumDistance) * (1.0f / Dimensions));
-                Debug.DrawLine(debugPosition, debugPosition + Vector3.up, Color.magenta, 30.0f);
+                //Debug.DrawLine(debugPosition, debugPosition + Vector3.up, Color.magenta, 30.0f);
             }
         }
     }
@@ -105,9 +113,11 @@ public class UtencilPlacement : MonoBehaviour
             //            item.transform.position.y,
             //            Mathf.Lerp(plane.bounds.min.z, plane.bounds.max.z, x.y))) -
             //        SpotToAvoid.position).magnitude < AreaOfSpot);
-            possibleIndices.RemoveAll(x => ((new Vector3(Mathf.Lerp(MinPlane.x, MaxPlane.x, x.x),
-                        item.transform.position.y,
-                        Mathf.Lerp(MinPlane.z, MaxPlane.z, x.y))) -
+            possibleIndices.RemoveAll(x => (
+            
+            ((transform.rotation * new Vector3(Mathf.Lerp(MinPlane.x, MaxPlane.x, x.x),
+                        plane.center.y + 0.026f,
+                        Mathf.Lerp(MinPlane.z, MaxPlane.z, x.y))) + plane.transform.position) -
                     SpotToAvoid.position).magnitude < AreaOfSpot);
 
             if (possibleIndices.Count == 0)

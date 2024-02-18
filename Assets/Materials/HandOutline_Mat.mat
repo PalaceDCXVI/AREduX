@@ -79,7 +79,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.376958, g: 0.39489698, b: 0.4056604, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GrabbableObjectPos: {r: 0.30463928, g: -0.18959162, b: 0.6926202, a: 0}
+    - _GrabbableObjectPos: {r: 0.2, g: -0.3027534, b: 0.60950005, a: 0}
     - _PressRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.13999642, g: 0.21431634, b: 0.24528301, a: 0}
   m_BuildTextureStacks: []

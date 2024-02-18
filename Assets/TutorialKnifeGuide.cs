@@ -5,6 +5,9 @@ using UnityEngine;
 public class TutorialKnifeGuide : MonoBehaviour
 {
     public Animator knifeAnimator;
+
+    public bool CubesCut = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +24,19 @@ public class TutorialKnifeGuide : MonoBehaviour
         else
         {
             knifeAnimator.SetBool("UpsideDown", true);
+        }
+    }
+
+    public void KnifePickedUp()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    public void KnifeDropped()
+    {
+        if (!CubesCut)
+        {
+            this.gameObject.SetActive(true);
         }
     }
 }

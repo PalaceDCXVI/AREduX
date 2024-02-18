@@ -79,9 +79,9 @@ public class FamiliarizationScript : ScenarioTask
             case MaterialManager.HighlightType.DotCursor:
                 AudioPromptManager.Instance.PlayAudioClip(DotCursorClip, DotCursorClipSubtitle);
                 break;
-            case MaterialManager.HighlightType.Seethrough:
-                AudioPromptManager.Instance.PlayAudioClip(SeethroughClip, SeethroughClipSubtitle);
-                break;
+            //case MaterialManager.HighlightType.Seethrough:
+            //    AudioPromptManager.Instance.PlayAudioClip(SeethroughClip, SeethroughClipSubtitle);
+            //    break;
             case MaterialManager.HighlightType.None:
                 AudioPromptManager.Instance.PlayAudioClip(NoneClip, NoneClipSubtitle);
                 break;
