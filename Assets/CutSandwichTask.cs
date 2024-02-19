@@ -39,6 +39,7 @@ public class CutSandwichTask : ScenarioTask
 
         if (totalNumberOfCutCubes == cutCubes) 
         {
+            ForkIsInPlace = false;
             GetComponentInChildren<TutorialKnifeGuide>(true).CubesCut = true;
             CompleteTask();
         }

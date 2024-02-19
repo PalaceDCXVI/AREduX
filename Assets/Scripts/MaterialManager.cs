@@ -26,6 +26,7 @@ public class MaterialManager : MonoBehaviour
 
     //Color selectionAlterationColor = new Color(0.3f, 0.3f, 0.0f, 0.0f);
     Color selectionAlterationColor = new Color(1.0f, 1.0f, 0.0f, 0.0f);
+    public Color ObjectHighlightColor => selectionAlterationColor;
 
     Color originalHandFillColor;
     Color standardColour;

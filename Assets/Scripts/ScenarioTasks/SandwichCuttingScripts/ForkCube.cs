@@ -35,8 +35,23 @@ public class ForkCube : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ForkHead"))
         {
-            Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
-            this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
+            switch (MaterialManager.Instance.highlightType)
+            {
+                case MaterialManager.HighlightType.ObjectHighlight:
+                    this.gameObject.GetComponent<Renderer>().material.color = MaterialManager.Instance.ObjectHighlightColor;
+                    break;
+                case MaterialManager.HighlightType.HandHighlight:
+                case MaterialManager.HighlightType.SphericalCursor:
+                case MaterialManager.HighlightType.DotCursor:
+                case MaterialManager.HighlightType.None:
+                    this.gameObject.GetComponent<Renderer>().enabled = false;
+                    break;
+                default:
+                    break;
+            }
+
+            //Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+            //this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
 
             cutTask.ForkIsInPlace = true;
             //ForkHighlight.SetActive(false);
@@ -47,8 +62,23 @@ public class ForkCube : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ForkHead"))
         {
-            Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
-            this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 1.0f);
+            switch (MaterialManager.Instance.highlightType)
+            {
+                case MaterialManager.HighlightType.ObjectHighlight:
+                    this.gameObject.GetComponent<ObjectReset>()?.ResetMaterialColour();
+                    break;
+                case MaterialManager.HighlightType.HandHighlight:
+                case MaterialManager.HighlightType.SphericalCursor:
+                case MaterialManager.HighlightType.DotCursor:
+                case MaterialManager.HighlightType.None:
+                    this.gameObject.GetComponent<Renderer>().enabled = true;
+                    break;
+                default:
+                    break;
+            }
+
+            //Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
+            //this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 1.0f);
 
             cutTask.ForkIsInPlace = false;
             
