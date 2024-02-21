@@ -7,6 +7,7 @@ public class ForkCube : MonoBehaviour
     public CutSandwichTask cutTask;
 
     public GameObject ForkHighlight;
+    public GameObject ForkHighlightOther;
     public GameObject ForkPosition1;
     public GameObject ForkPosition2;
 
@@ -50,6 +51,8 @@ public class ForkCube : MonoBehaviour
                     break;
             }
 
+            ForkHighlightOther.GetComponent<Renderer>().enabled = false;
+
             //Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
             //this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
 
@@ -76,6 +79,8 @@ public class ForkCube : MonoBehaviour
                 default:
                     break;
             }
+
+            ForkHighlightOther.GetComponent<Renderer>().enabled = true;
 
             //Color originalColor = this.gameObject.GetComponent<Renderer>().material.color;
             //this.gameObject.GetComponent<Renderer>().material.color = new UnityEngine.Color(originalColor.r, originalColor.g, originalColor.b, 1.0f);

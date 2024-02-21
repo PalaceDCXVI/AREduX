@@ -35,8 +35,8 @@ public class MaterialManager : MonoBehaviour
     public float SeethroughAlpha = 0.7f;
     
     string colourPropertyName = "_Color";
-    string GrabbableObjectPosPropertyName = "_GrabbableObjectPos";
-    string HighlightHandPropertyName = "_HighlightHand";
+    public static string GrabbableObjectPosPropertyName = "_GrabbableObjectPos";
+    public static string HighlightHandPropertyName = "_HighlightHand";
 
     GameObject grabbableObject = null;
     SkinnedMeshRenderer handRenderer = null;
