@@ -4,6 +4,7 @@ using Microsoft.MixedReality.Toolkit.Input;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -39,7 +40,11 @@ public class MaterialManager : MonoBehaviour
     public static string HighlightHandPropertyName = "_HighlightHand";
 
     GameObject grabbableObject = null;
+    GameObject RightGrabbableObject = null;
+    GameObject LeftGrabbableObject = null;
     SkinnedMeshRenderer handRenderer = null;
+    SkinnedMeshRenderer RightHandRenderer = null;
+    SkinnedMeshRenderer LeftHandRenderer = null;
 
     private SpherePointerVisual pointerVisual;
 
@@ -100,6 +105,15 @@ public class MaterialManager : MonoBehaviour
 
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
+
+        if (RightHandRenderer != null && RightGrabbableObject != null)
+        {
+            RightHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+        }
+        if (LeftHandRenderer != null && LeftGrabbableObject != null)
+        {
+            LeftHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+        }
     }
 
     public List<HighlightType> GenerateRandomLoop(List<HighlightType> listToShuffle)
@@ -288,6 +302,25 @@ public class MaterialManager : MonoBehaviour
                         {
                             if (hand.Visualizer != null)
                             {
+                                GameObject localGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
+                                SkinnedMeshRenderer localHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
+
+                                if (localHandRenderer == null)
+                                {
+                                    Debug.LogError("Local Hand Renderer doesn't have the right material???");
+                                }
+
+                                if (hand.ControllerHandedness == Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right)
+                                {
+                                    RightGrabbableObject = null;
+                                    RightHandRenderer = null;
+                                }
+                                else
+                                {
+                                    LeftGrabbableObject = null;
+                                    LeftHandRenderer = null;
+                                }
+
                                 grabbableObject = null;
                                 handRenderer = null;
                                 
@@ -303,7 +336,10 @@ public class MaterialManager : MonoBehaviour
 
                                 CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
-                                
+                                    
+                                localHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                localHandRenderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
+
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetVector(colourPropertyName, originalHandFillColor);
                             }
                         }
@@ -360,6 +396,25 @@ public class MaterialManager : MonoBehaviour
                         {
                             if (hand.Visualizer != null)
                             {
+                                GameObject localGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
+                                SkinnedMeshRenderer localHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
+
+                                if(localHandRenderer == null)
+                                {
+                                    Debug.LogError("Local Hand Renderer doesn't have the right material???");
+                                }
+
+                                if (hand.ControllerHandedness == Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right)
+                                {
+                                    RightGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
+                                    RightHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>();
+                                }
+                                else
+                                {
+                                    LeftGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
+                                    LeftHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>();
+                                }
+
                                 grabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
                                 handRenderer = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>();
 
@@ -375,7 +430,9 @@ public class MaterialManager : MonoBehaviour
 
                                 CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
-                                    
+
+                                localHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                localHandRenderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor(colourPropertyName, selectionAlterationColor);
                             }
                         }
