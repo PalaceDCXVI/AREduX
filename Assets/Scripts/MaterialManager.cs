@@ -98,6 +98,7 @@ public class MaterialManager : MonoBehaviour
             }
         }
 
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
     }
 
@@ -118,6 +119,7 @@ public class MaterialManager : MonoBehaviour
         highlightType = type;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
 
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
     }
 
@@ -132,6 +134,7 @@ public class MaterialManager : MonoBehaviour
             highlightType = OrderOfHighlightTypes[currentHighlightIndex];
         }
 
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, highlightType == HighlightType.HandHighlight ? 1.0f : 0.0f);
     }
 
@@ -158,6 +161,7 @@ public class MaterialManager : MonoBehaviour
     {
         highlightType = HighlightType.ObjectHighlight;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
@@ -165,6 +169,7 @@ public class MaterialManager : MonoBehaviour
     {
         highlightType = HighlightType.HandHighlight;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
     }
 
@@ -172,6 +177,7 @@ public class MaterialManager : MonoBehaviour
     {
         highlightType = HighlightType.DotCursor;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
@@ -179,6 +185,7 @@ public class MaterialManager : MonoBehaviour
     {
         highlightType = HighlightType.SphericalCursor;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
@@ -186,6 +193,7 @@ public class MaterialManager : MonoBehaviour
     {
         //ighlightType = HighlightType.Seethrough;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
@@ -193,6 +201,7 @@ public class MaterialManager : MonoBehaviour
     {
         highlightType = HighlightType.None;
         currentHighlightIndex = OrderOfHighlightTypes.IndexOf(highlightType);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 

@@ -63,7 +63,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HighlightHand: 1
+    - _HighlightHand: 0
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -79,7 +79,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.376958, g: 0.39489698, b: 0.4056604, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GrabbableObjectPos: {r: -0.02203534, g: -0.28734374, b: 0.5779816, a: 0}
+    - _GrabbableObjectPos: {r: 0.075367525, g: -0.32524145, b: 0.5228984, a: 0}
     - _PressRimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimColor: {r: 0.13999642, g: 0.21431634, b: 0.24528301, a: 0}
   m_BuildTextureStacks: []

@@ -8,7 +8,7 @@ public class AudioPromptManager : MonoBehaviour
 {
     public static AudioPromptManager Instance;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     public AudioClip StartingClip;
     public string StartingClipSubtitles = "";
