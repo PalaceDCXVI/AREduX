@@ -99,7 +99,7 @@ Shader "Mixed Reality Toolkit/RimOutline"
             uniform float _PressIntensity;
 
             uniform float4 _GrabbableObjectPos;
-            uniform float _HighlightHand;
+            uniform float _HighlightHand = 0;
 
             fixed4 frag(v2f i) : SV_Target
             {

@@ -43,8 +43,10 @@ public class MaterialManager : MonoBehaviour
     GameObject RightGrabbableObject = null;
     GameObject LeftGrabbableObject = null;
     SkinnedMeshRenderer handRenderer = null;
-    SkinnedMeshRenderer RightHandRenderer = null;
-    SkinnedMeshRenderer LeftHandRenderer = null;
+    List<SkinnedMeshRenderer> RightSkinnedHandRenderers = new List<SkinnedMeshRenderer>();
+    List<SkinnedMeshRenderer> LeftSkinnedHandRenderers = new List<SkinnedMeshRenderer>();
+    List<MeshRenderer> RightHandRenderers = new List<MeshRenderer>();
+    List<MeshRenderer> LeftHandRenderers = new List<MeshRenderer>();
 
     private SpherePointerVisual pointerVisual;
 
@@ -88,31 +90,58 @@ public class MaterialManager : MonoBehaviour
             HandRendererDeathPanel.SetActive(false);
         }
 
-        if (highlightType == HighlightType.HandHighlight && grabbableObject && handRenderer)
+        //if (highlightType == HighlightType.HandHighlight && grabbableObject && handRenderer)
+        //{
+        //    Vector4 grabbableObjectPos =  grabbableObject.transform.position;
+        //    handRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+        //    Debug.Log(grabbableObjectPos);
+        //    handRenderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+        //}
+        //else
+        //{
+        //    if (!(handRenderer == null || handRenderer.Equals(null)))
+        //    {
+        //        handRenderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+        //    }
+        //}
+
+        //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
+        //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
+
+        if (RightSkinnedHandRenderers.Count > 0 && RightGrabbableObject != null)
         {
-            Vector4 grabbableObjectPos =  grabbableObject.transform.position;
-            handRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-            Debug.Log(grabbableObjectPos);
-            handRenderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
-        }
-        else
-        {
-            if (!(handRenderer == null || handRenderer.Equals(null)))
+            foreach(var renderer in RightSkinnedHandRenderers) 
             {
-                handRenderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
+                //renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+            }
+        }
+        if (LeftSkinnedHandRenderers.Count > 0 && LeftGrabbableObject != null)
+        {
+            foreach (var renderer in LeftSkinnedHandRenderers)
+            {
+                //renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
             }
         }
 
-        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
-        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight && grabbableObject) ? 1.0f : 0.0f);
-
-        if (RightHandRenderer != null && RightGrabbableObject != null)
+        if (RightHandRenderers.Count > 0 && RightGrabbableObject != null)
         {
-            RightHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+            foreach (var renderer in RightHandRenderers)
+            {
+                renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+            }
         }
-        if (LeftHandRenderer != null && LeftGrabbableObject != null)
+        if (LeftHandRenderers.Count > 0 && LeftGrabbableObject != null)
         {
-            LeftHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+            foreach (var renderer in LeftHandRenderers)
+            {
+                renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+            }
         }
     }
 
@@ -303,9 +332,12 @@ public class MaterialManager : MonoBehaviour
                             if (hand.Visualizer != null)
                             {
                                 GameObject localGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
-                                SkinnedMeshRenderer localHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
+                                SkinnedMeshRenderer localSkinnedHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
+                                List<MeshRenderer> localHandRenderers = new List<MeshRenderer>();
+                                localHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<MeshRenderer>());
+                                localHandRenderers.RemoveAll(hr => !hr.material.HasProperty(GrabbableObjectPosPropertyName));
 
-                                if (localHandRenderer == null)
+                                if (localSkinnedHandRenderer == null)
                                 {
                                     Debug.LogError("Local Hand Renderer doesn't have the right material???");
                                 }
@@ -313,35 +345,48 @@ public class MaterialManager : MonoBehaviour
                                 if (hand.ControllerHandedness == Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right)
                                 {
                                     RightGrabbableObject = null;
-                                    RightHandRenderer = null;
+                                    RightSkinnedHandRenderers.Clear();
+                                    RightHandRenderers.Clear();
                                 }
                                 else
                                 {
                                     LeftGrabbableObject = null;
-                                    LeftHandRenderer = null;
+                                    LeftSkinnedHandRenderers.Clear();
+                                    LeftHandRenderers.Clear();
                                 }
 
                                 grabbableObject = null;
                                 handRenderer = null;
                                 
                                 Vector4 grabbableObjectPos = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().worldToLocalMatrix * manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject.transform.position;
-                                ///hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
                                 Debug.Log(grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
 
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
-
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+                                //
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
                                     
-                                localHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                localHandRenderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
+                                //localHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //localHandRenderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
 
-                                //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetVector(colourPropertyName, originalHandFillColor);
-                            }
+                                localSkinnedHandRenderer.sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                localSkinnedHandRenderer.sharedMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+
+                                foreach (var renderer in localHandRenderers)
+                                {
+                                    //renderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                    //renderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
+                                    renderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                    renderer.material.SetFloat(HighlightHandPropertyName, 0.0f);
+                                }
+
+                                    //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetVector(colourPropertyName, originalHandFillColor);
+                                }
                         }
                     }
                 }
@@ -396,10 +441,14 @@ public class MaterialManager : MonoBehaviour
                         {
                             if (hand.Visualizer != null)
                             {
-                                GameObject localGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
-                                SkinnedMeshRenderer localHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
 
-                                if(localHandRenderer == null)
+                                GameObject localGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
+                                SkinnedMeshRenderer localSkinnedHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>().Single(hr => hr.material.HasProperty(GrabbableObjectPosPropertyName));
+                                List<MeshRenderer> localHandRenderers = new List<MeshRenderer>();
+                                localHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<MeshRenderer>());
+                                localHandRenderers.RemoveAll(hr => !hr.material.HasProperty(GrabbableObjectPosPropertyName));
+
+                                if(localSkinnedHandRenderer == null)
                                 {
                                     Debug.LogError("Local Hand Renderer doesn't have the right material???");
                                 }
@@ -407,12 +456,18 @@ public class MaterialManager : MonoBehaviour
                                 if (hand.ControllerHandedness == Microsoft.MixedReality.Toolkit.Utilities.Handedness.Right)
                                 {
                                     RightGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
-                                    RightHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>();
+                                    //RightSkinnedHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>());
+                                    RightSkinnedHandRenderers.Add(localSkinnedHandRenderer);
+                                    RightHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<MeshRenderer>());
+                                    RightHandRenderers.RemoveAll(hr => !hr.material.HasProperty(GrabbableObjectPosPropertyName));
                                 }
                                 else
                                 {
                                     LeftGrabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
-                                    LeftHandRenderer = hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>();
+                                    //LeftSkinnedHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<SkinnedMeshRenderer>());
+                                    LeftSkinnedHandRenderers.Add(localSkinnedHandRenderer);
+                                    LeftHandRenderers.AddRange(hand.Visualizer.GameObjectProxy.GetComponentsInChildren<MeshRenderer>());
+                                    LeftHandRenderers.RemoveAll(hr => !hr.material.HasProperty(GrabbableObjectPosPropertyName));
                                 }
 
                                 grabbableObject = manipulationEventData.ManipulationSource.GetComponentInChildren<Renderer>().gameObject;
@@ -425,14 +480,26 @@ public class MaterialManager : MonoBehaviour
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<RiggedHandVisualizer>().HandMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
 
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+                                //
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
 
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+                                localSkinnedHandRenderer.sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                localSkinnedHandRenderer.sharedMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
 
-                                localHandRenderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
-                                localHandRenderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
+                                //localSkinnedHandRenderer.sharedMaterial.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                //localSkinnedHandRenderer.sharedMaterial.SetFloat(HighlightHandPropertyName, 1.0f);
+
+                                foreach (var renderer in localHandRenderers)
+                                {
+                                    //renderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                    //renderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
+                                    renderer.material.SetVector(GrabbableObjectPosPropertyName, grabbableObjectPos);
+                                    renderer.material.SetFloat(HighlightHandPropertyName, 1.0f);
+                                }
+
                                 //hand.Visualizer.GameObjectProxy.GetComponentInChildren<SkinnedMeshRenderer>().material.SetColor(colourPropertyName, selectionAlterationColor);
                             }
                         }
