@@ -79,6 +79,9 @@ public class MaterialManager : MonoBehaviour
         //OrderOfHighlightTypes.Remove(HighlightType.Seethrough);
 
         GenerateRandomLoop(OrderOfHighlightTypes);
+
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
+        CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
     }
 
     // Update is called once per frame
@@ -112,18 +115,24 @@ public class MaterialManager : MonoBehaviour
         {
             foreach(var renderer in RightSkinnedHandRenderers) 
             {
-                //renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
-                renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
-                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                if (renderer)
+                {
+                    //renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                    renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                    renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                }
             }
         }
         if (LeftSkinnedHandRenderers.Count > 0 && LeftGrabbableObject != null)
         {
             foreach (var renderer in LeftSkinnedHandRenderers)
             {
-                //renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
-                renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
-                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                if (renderer)
+                {
+                    //renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                    renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                    renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                }
             }
         }
 
@@ -131,16 +140,22 @@ public class MaterialManager : MonoBehaviour
         {
             foreach (var renderer in RightHandRenderers)
             {
-                renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
-                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                if (renderer)
+                {
+                    renderer.material.SetVector(GrabbableObjectPosPropertyName, RightGrabbableObject.transform.position);
+                    renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                }
             }
         }
         if (LeftHandRenderers.Count > 0 && LeftGrabbableObject != null)
         {
             foreach (var renderer in LeftHandRenderers)
             {
-                renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
-                renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                if (renderer)
+                {
+                    renderer.material.SetVector(GrabbableObjectPosPropertyName, LeftGrabbableObject.transform.position);
+                    renderer.material.SetFloat(HighlightHandPropertyName, (highlightType == HighlightType.HandHighlight) ? 1.0f : 0.0f);
+                }
             }
         }
     }
