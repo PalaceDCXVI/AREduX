@@ -100,6 +100,7 @@ public class BreadmakingScript : MonoBehaviour
                 collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().enabled = false;
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
                 collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
@@ -133,6 +134,7 @@ public class BreadmakingScript : MonoBehaviour
                 collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().enabled = false;
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
                 collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
@@ -167,6 +169,7 @@ public class BreadmakingScript : MonoBehaviour
                 collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().enabled = false;
                 collision.gameObject.GetComponent<ObjectReset>().enabled = false;
                 collision.gameObject.GetComponent<ManipulationCheck>().wasSlotted = true;
 
@@ -210,6 +213,7 @@ public class BreadmakingScript : MonoBehaviour
                 collision.rigidbody.isKinematic = true;
 
                 collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
+                collision.gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().enabled = false;
                 gameObject.GetComponent<Microsoft.MixedReality.Toolkit.UI.ObjectManipulator>().ForceEndManipulation();
 
                 if (gameObject.GetComponent<ManipulationCheck>().CanBeSlotted())
