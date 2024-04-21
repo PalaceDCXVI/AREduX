@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
+using static MaterialManager;
 
 public class MaterialManager : MonoBehaviour
 {
@@ -21,7 +22,22 @@ public class MaterialManager : MonoBehaviour
         DotCursor = 3,
         None = 4,
         //Seethrough = int.MaxValue //Not used anymore.
-    } 
+    }
+
+    //Based on https://damienmasson.com/tools/latin_square/
+    public List<List<HighlightType>> LatinTableTypes = new List<List<HighlightType>>
+    {	
+     	new List<HighlightType>{ (HighlightType)0, (HighlightType)1, (HighlightType)4, (HighlightType)2, (HighlightType)3 },
+     	new List<HighlightType>{ (HighlightType)4, (HighlightType)3, (HighlightType)0, (HighlightType)2, (HighlightType)1 },
+     	new List<HighlightType>{ (HighlightType)2, (HighlightType)3, (HighlightType)1, (HighlightType)4, (HighlightType)0 },
+     	new List<HighlightType>{ (HighlightType)1, (HighlightType)0, (HighlightType)2, (HighlightType)4, (HighlightType)3 },
+     	new List<HighlightType>{ (HighlightType)4, (HighlightType)0, (HighlightType)3, (HighlightType)1, (HighlightType)2 },
+     	new List<HighlightType>{ (HighlightType)3, (HighlightType)2, (HighlightType)4, (HighlightType)1, (HighlightType)0 },
+     	new List<HighlightType>{ (HighlightType)1, (HighlightType)2, (HighlightType)0, (HighlightType)3, (HighlightType)4 },
+     	new List<HighlightType>{ (HighlightType)0, (HighlightType)4, (HighlightType)1, (HighlightType)3, (HighlightType)2 },
+     	new List<HighlightType>{ (HighlightType)3, (HighlightType)4, (HighlightType)2, (HighlightType)0, (HighlightType)1 },
+     	new List<HighlightType>{ (HighlightType)2, (HighlightType)1, (HighlightType)3, (HighlightType)0, (HighlightType)4 } 
+    };
 
     public HighlightType highlightType = HighlightType.None;
 
@@ -74,11 +90,19 @@ public class MaterialManager : MonoBehaviour
 
         for (int i = 0; i <= (int)HighlightType.None; i++)
         {
-            OrderOfHighlightTypes.Add((HighlightType)i);
+            //OrderOfHighlightTypes.Add((HighlightType)i);
         }
         //OrderOfHighlightTypes.Remove(HighlightType.Seethrough);
 
-        GenerateRandomLoop(OrderOfHighlightTypes);
+        //GenerateRandomLoop(OrderOfHighlightTypes);
+        if (PlayerPrefs.HasKey(SimulationDataManager.LatinTableIndexKey))
+        {
+            OrderOfHighlightTypes = LatinTableTypes[PlayerPrefs.GetInt(SimulationDataManager.LatinTableIndexKey) % LatinTableTypes.Count];
+        }
+        else
+        {
+            OrderOfHighlightTypes = LatinTableTypes[0];
+        }
 
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.RiggedHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
         CoreServices.InputSystem.InputSystemProfile.HandTrackingProfile.SystemHandMeshMaterial.SetFloat(HighlightHandPropertyName, 0.0f);
