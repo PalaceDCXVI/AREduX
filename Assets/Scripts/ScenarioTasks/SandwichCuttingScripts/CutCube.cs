@@ -1,3 +1,4 @@
+using Microsoft.MixedReality.Toolkit.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,18 +23,68 @@ public class CutCube : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("KnifeHead") && cutTask != null && cutTask.ForkIsInPlace)
+        if (other.gameObject.CompareTag("KnifeHead") && cutTask != null)
         {
-            this.gameObject.SetActive(false);
+            if (cutTask.ForkIsInPlace)
+            {
+                this.gameObject.SetActive(false);
 
-            cutTask.IncrementNumberOfCutCubes();
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOff();
+
+                cutTask.IncrementNumberOfCutCubes();
+            }
+            else
+            {
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOn(this.GetComponent<Collider>());
+            }
         }
 
-        if (other.gameObject.CompareTag("KnifeHead") && familiarizationTask != null && familiarizationTask.ForkIsInPlace)
+        if (other.gameObject.CompareTag("KnifeHead") && familiarizationTask != null)
         {
-            this.gameObject.SetActive(false);
+            if (familiarizationTask.ForkIsInPlace)
+            {
+                this.gameObject.SetActive(false);
 
-            familiarizationTask.IncrementCutSlots();
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOff();
+
+                familiarizationTask.IncrementCutSlots();
+            }
+            else
+            {
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOn(this.GetComponent<Collider>());
+            }
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("KnifeHead") && cutTask != null)
+        {
+            if (!cutTask.ForkIsInPlace)
+            {
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.IncrementContactCounter();
+            }
+        }
+
+        if (other.gameObject.CompareTag("KnifeHead") && familiarizationTask != null)
+        {
+            if (!familiarizationTask.ForkIsInPlace)
+            {
+                other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.IncrementContactCounter();
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("KnifeHead") && cutTask != null)
+        {
+            other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOff();
+        }
+
+        if (other.gameObject.CompareTag("KnifeHead") && familiarizationTask != null)
+        {
+            other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOff();
         }
     }
 }

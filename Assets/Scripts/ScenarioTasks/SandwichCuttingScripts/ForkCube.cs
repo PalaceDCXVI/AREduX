@@ -74,6 +74,16 @@ public class ForkCube : MonoBehaviour
                 familiarizationTask.ForkIsInPlace = true;
             }
             //ForkHighlight.SetActive(false);
+
+            other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOn(this.GetComponent<Collider>());
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("ForkHead"))
+        {
+            other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.IncrementContactCounter();
         }
     }
 
@@ -115,6 +125,8 @@ public class ForkCube : MonoBehaviour
             }
 
             //ForkHighlight.SetActive(true);
+
+            other.gameObject.GetComponentInParent<ToolMaterialManipulator>()?.SetHandHighlightOff();
         }
     }
 
